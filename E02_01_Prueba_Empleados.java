@@ -16,5 +16,3 @@ public class E02_01_Prueba_Empleados {
 	}
 
 }
-
-

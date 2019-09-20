@@ -26,7 +26,7 @@ public class E02_01_Empleado {
 	}
 	
 	//
-	//  Class Sueldo neto
+	// Metodo Sueldo neto
 	//	Retorna sueldo * 0.85
 	//
 	public int sueldo_Neto() {
