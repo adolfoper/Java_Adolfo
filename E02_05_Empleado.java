@@ -47,6 +47,10 @@ public class E02_05_Empleado {
 	//	Constructor con todos los parametros
 	//
 	public E02_05_Empleado(String nombre, String dni, int sueldo) throws Error_Valida {
+		if (nombre.equals(""))
+			throw new Error_Valida("Nombre incorrecto");
+		if (dni.equals(""))
+			throw new Error_Valida("Dni incorrecto");
 		
 		this.nombre = nombre;
 		this.dni = dni;
@@ -58,9 +62,14 @@ public class E02_05_Empleado {
 //
 	public E02_05_Empleado(String nombre, String dni) throws Error_Valida {
 	
-	   this.nombre = nombre;
-	   this.dni = dni;
-	   this.sueldo = 0;
+		if (nombre.equals(""))
+			throw new Error_Valida("Nombre incorrecto");
+		if (dni.equals(""))
+			throw new Error_Valida("Dni incorrecto");
+		
+		this.nombre = nombre;
+		this.dni = dni;
+		this.sueldo = 0;
 	}
 	
 	// Clase privada que retorna el reductor de sueldo neto

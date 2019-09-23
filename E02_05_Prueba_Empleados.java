@@ -14,22 +14,44 @@ public class E02_05_Prueba_Empleados {
 		E02_05_Administracion javier = null;
 		E02_05_Gerente manuel = null;
 		E02_05_Direccion antonio = null;
+		E02_05_Empleado becario = null;
 
 		boolean error = false;
 		
-		try
-		{
+		try{
 			javier = new E02_05_Administracion("Javier", "51224221K", 1000, "Contabilidad");
-			manuel = new E02_05_Gerente("Manuel", "111111111K", 2000, "Progress derivation enhancement",4000);
-			antonio = new E02_05_Direccion("Antonio", "222222222K", 6000, 900000);
-
 		}
-		catch (Error_Valida err)
-		{	
+		catch (Error_Valida err){	
 			System.out.println(err.getMessage());
 			error = true;
 		}
-		finally
+		
+		try{
+			manuel = new E02_05_Gerente("Manuel", "111111111K", 2000, "Progress derivation enhancement",4000);
+		}
+		catch (Error_Valida err){	
+			System.out.println(err.getMessage());
+			error = true;
+		}
+		
+		try{
+			antonio = new E02_05_Direccion("Antonio", "222222222K", 6000, 900000);
+		}
+		catch (Error_Valida err){	
+			System.out.println(err.getMessage());
+			error = true;
+		}
+		
+		try{
+			becario = new E02_05_Empleado("Becario", "3333333333K", 900);
+
+		}
+		catch (Error_Valida err){	
+			System.out.println(err.getMessage());
+			error = true;
+		}
+		
+		if (!error)
 		{		
 				System.out.println("--  Administracion --");
 				System.out.println("Nombre:"+ javier.getNombre());
@@ -49,6 +71,12 @@ public class E02_05_Prueba_Empleados {
 				System.out.println("Dni:"+ antonio.getDni());
 				System.out.println("Sueldo:"+ antonio.getSueldo());
 				System.out.println("Seccion:"+ antonio.getStock_Opt());
+				
+				System.out.println("--  Becario --");
+				System.out.println("Nombre:"+ becario.getNombre());
+				System.out.println("Dni:"+ becario.getDni());
+				System.out.println("Sueldo:"+ becario.getSueldo());
+
 		}
 		
 		sc.close();
