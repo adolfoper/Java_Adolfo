@@ -437,7 +437,6 @@ public class Mantenimiento_Tabla {
 		String campo = sc.nextLine();
 		
 		if (!campo.equals("")) {
-			System.out.println("Pues no es vacío");
 			return Integer.parseInt(campo);
 		}
 		else {
