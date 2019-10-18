@@ -1,18 +1,10 @@
 package Ejercicios_T5_Anot;
 
 import java.util.Scanner;
-
-//import org.springframework.context.annotation.ComponentScan;
-//import org.springframework.context.annotation.Configuration;
-
-// Clases de contexto
-//import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import Ejercicios_T5_Anot.*;
 
-//@Configuration
-//@ComponentScan("Ejercicios_T5_Anot")
 public class Prueba {
 	public static void main(String args[]) {
 
@@ -36,7 +28,7 @@ public class Prueba {
 		System.out.println("\nCodificado con palabras + invertir:");
 		System.out.println(codificador1.codificar(mensaje));
 		
-		// Prueba con el config 1 (palabras + César)
+		// Prueba con el config 2 (palabras + César)
 		Codificador codificador2 = context2.getBean("codificador",Codificador.class);
 		System.out.println("\nCodificado con palabras + César:");
 		System.out.println(codificador2.codificar(mensaje));	

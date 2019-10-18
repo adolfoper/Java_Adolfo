@@ -1,7 +1,5 @@
 package Ejercicios_T5_Anot;
 
-import org.springframework.stereotype.Component;
-
 //* 
 //* Clase para codificar y decodificar un String invirtiendo las letras
 //*

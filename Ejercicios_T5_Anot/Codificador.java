@@ -1,8 +1,6 @@
 package Ejercicios_T5_Anot;
 
 import java.util.ArrayList;
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 
 //* 
 //* Clase para codificar y decodificar frases con Iproceso + ICodificacion

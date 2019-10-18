@@ -1,8 +1,6 @@
 package Ejercicios_T5_Anot;
 
 import java.util.ArrayList;
-import org.springframework.stereotype.Component;
-
 
 //* 
 //* Clase para cortar y ensamblar palabras de un String

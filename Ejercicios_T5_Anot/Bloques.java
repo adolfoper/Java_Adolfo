@@ -1,12 +1,10 @@
 package Ejercicios_T5_Anot;
 
 import java.util.ArrayList;
-import org.springframework.stereotype.Component;
 
 //*
 //*  Divide una frase en bloques de 4 posiciones
 //*
-@Component
 public class Bloques implements IProcesar {
 	
 	//
