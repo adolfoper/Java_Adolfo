@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 //* 
 //* Clase para cortar y ensamblar palabras de un String
 //*
-@Component
 public class Palabras implements IProcesar {
 	
 	//*
@@ -59,12 +58,14 @@ public class Palabras implements IProcesar {
 	public String unir(ArrayList<String> cadenas)
 	{
 		String frase = "";
-		boolean primera_vez = false;
+		boolean primera_vez = true;
 		
 		for (String palabra: cadenas) {
 			if (!primera_vez) {
 				frase += " ";	
 			}
+			else
+				primera_vez = false;
 			frase += palabra;
 		}
 		return frase;

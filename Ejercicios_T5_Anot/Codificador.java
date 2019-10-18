@@ -7,18 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 //* 
 //* Clase para codificar y decodificar frases con Iproceso + ICodificacion
 //*
-@Component
 public class Codificador {
 	
-	@Autowired
 	IProcesar proceso;
-	@Autowired
 	ICodificar codificado;
 	
 	//*
 	//*  Constructor
 	//*
-	@Autowired
 	public Codificador(IProcesar proceso, ICodificar codificado){
 		this.proceso = proceso;
 		this.codificado = codificado;

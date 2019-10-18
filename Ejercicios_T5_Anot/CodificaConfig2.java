@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("Ejercicios_T5_Anot")
 
-public class CodificaConfig {
+public class CodificaConfig2 {
 
 	/*
 	@Bean
@@ -22,21 +22,22 @@ public class CodificaConfig {
 		return new Palabras();
 	}
 	
+	/*
 	@Bean
 	public ICodificar invertir() {
 		return new Invertir();
 	}
+	*/
 	
-	/*
+	
 	@Bean
 	public ICodificar cesar() {
 		return new Cesar();
 	}
-	*/
 	
 	@Bean
 	public Codificador codificador() {
-		return new Codificador(palabras(),invertir());
+		return new Codificador(palabras(),cesar());
 	}
 	
 }

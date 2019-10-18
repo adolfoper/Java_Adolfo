@@ -1,5 +1,7 @@
 package Ejercicios_T5_Anot;
 
+import java.util.Scanner;
+
 //import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.Configuration;
 
@@ -13,29 +15,37 @@ import Ejercicios_T5_Anot.*;
 //@ComponentScan("Ejercicios_T5_Anot")
 public class Prueba {
 	public static void main(String args[]) {
-	
-		// Cargar el contexto
-		AnnotationConfigApplicationContext context= new AnnotationConfigApplicationContext(CodificaConfig.class);
+
+		System.out.println("Introduzca frase a codificar");
+		Scanner sc = new Scanner(System.in);
+		String mensaje = sc.nextLine();
+			
+		// Cargar el contexto 1
+		AnnotationConfigApplicationContext context1= new AnnotationConfigApplicationContext(CodificaConfig.class);
 		
-		// Pedir el bean
-		IProcesar palabra = context.getBean("palabras", Palabras.class);
-		//System.out.println(palabra.dividir("AB_c wxyz"));
+		// Cargar el contexto 2
+		AnnotationConfigApplicationContext context2= new AnnotationConfigApplicationContext(CodificaConfig2.class);
+				
+		// Pedir los beans
+		IProcesar palabra = context1.getBean("palabras", Palabras.class);		
+		ICodificar invertir = context1.getBean("invertir", Invertir.class);		
+		ICodificar cesar = context2.getBean("cesar", Cesar.class);
 		
-		IProcesar bloque = context.getBean("bloques", Bloques.class);
-		//System.out.println(bloque.dividir("AB_c wxyz"));
+		// Prueba con el config 1 (palabras + invertir)
+		Codificador codificador1 = context1.getBean("codificador",Codificador.class);		
+		System.out.println("\nCodificado con palabras + invertir:");
+		System.out.println(codificador1.codificar(mensaje));
 		
-		ICodificar invertir = context.getBean("invertir", Invertir.class);
-		//System.out.println(invertir.codificar("AB_c wxyz"));
+		// Prueba con el config 1 (palabras + César)
+		Codificador codificador2 = context2.getBean("codificador",Codificador.class);
+		System.out.println("\nCodificado con palabras + César:");
+		System.out.println(codificador2.codificar(mensaje));	
 		
-		ICodificar cesar = context.getBean("cesar", Cesar.class);
-		//System.out.println(cesar.codificar("AB_c wxyz"));
+		// Cerrar contextos y scanner
+		context1.close();
+		context2.close();		
+		sc.close();
 		
-		Codificador codificador = context.getBean("codificador",Codificador.class);
-		//Codificador codificador = new Codificador (palabra, invertir);
-		System.out.println(codificador.codificar("Hola vecino"));
-		
-		// Cerrar el contexto
-		context.close();				
 				
 	}
 

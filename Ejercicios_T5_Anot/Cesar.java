@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 //* 
 //* Clase para codificar y decodificar un String invirtiendo las letras
 //*
-@Component
 public class Cesar implements ICodificar {
 
 	final int salto = 2;  // Numero de posiciones a saltar en la dodificacion
