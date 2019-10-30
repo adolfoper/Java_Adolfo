@@ -20,7 +20,7 @@
 	<!-- Paso 5: Definir el resolvedor de rutas de vista de Spring MVC -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/alumno/" />
+		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 

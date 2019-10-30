@@ -13,19 +13,31 @@
 </style>
 </head>
 <body>
-
-<form action="procesar" modelAttribute="alumno">
-	Nombre(*):<form:input path="nombre" />
-		      <form:errors path="nombre" cssClass="error" />
-	<br />
-	DNI:<input path="dni"/><br/>
-	E-mail:<input path="email"/><br/>
-	Becado(S/N):<input path="becado"/><br/>
-	Asignatura:<input path="asignatura"/><br/>
-	<input type="submit">
-	
+<h1>Alta de alumno</h1>
 <br />
-</form>
+
+<form:form action="procesar" modelAttribute="alumno">
+	Nombre: <form:input path="nombre" />*
+		       <form:errors path="nombre" cssClass="error" />
+	<br /> <br />
+	DNI: <form:input path="dni"/>
+		 	<form:errors path="dni" cssClass="error" />
+	<br/> <br />
+	E-mail: <form:input path="email"/>
+	<form:errors path="email" cssClass="error" />
+	<br/> <br />
+	
+	Becado: <form:radiobuttons path="becado"
+	items="${alumno.listaSN}" />
+	<br /><br />
+	
+	Asignatura: <form:select path="asignatura">
+				<form:options items="${alumno.listaAsignaturas}" />
+				</form:select>
+	<br/><br/>
+	<input type="submit"> 
+	<br />
+</form:form>
 
 </body>
 </html>

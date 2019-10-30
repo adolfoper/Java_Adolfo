@@ -11,21 +11,25 @@ import org.springframework.validation.BindingResult;
 public class Controlador {
 	
 	@RequestMapping("/")
+	public String index(Model modelo) {
+		return"index";
+	}
+	
+	@RequestMapping("/form")
 	public String verForm(Model modelo) {
-		System.out.println("version 01");
 		Alumno alumno=new Alumno();
 		modelo.addAttribute("alumno", alumno);
-		return"form";
+		return"/alumno/form";
 	}
 	
 	@RequestMapping("/procesar")
 	public String procesar(@Valid @ModelAttribute("alumno") Alumno alumno,
 			 				BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) { 
-			return "form"; 
+			return "/alumno/form"; 
 		} 
 		else { 
-			return "ver-alumno"; 
+			return "/alumno/ver-alumno"; 
 		}
 	}
 }
