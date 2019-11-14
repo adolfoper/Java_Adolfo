@@ -41,7 +41,7 @@
 </form:form>
 
 <br/>
-<a href="lista-contactos">Volver a lista de contactos</a>
+<a href="">Volver a lista de contactos</a>
 
 </body>
 </html>
