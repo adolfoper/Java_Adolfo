@@ -14,10 +14,11 @@ import javax.persistence.Table;
 
 import club.model.Partida;
 
-//import org.hibernate.annotations.Type;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "jugadores")
@@ -51,8 +52,10 @@ public class Jugador {
 	@Column(name = "fechaalta")
 	private Date fechaalta;
 	
-	// Relacion con partidas
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
+	private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
+	
+	// Relacion como creador de partidas
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	private List<Partida> partidas;
 	
@@ -68,26 +71,39 @@ public class Jugador {
 		return partidas;
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
-			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	private List<Apuntado> apuntados;
+	//@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
+	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	////private List<Apuntado> apuntados;
+	//private Set<Apuntado> apuntados = new HashSet<>();
+	
+	//public void addApuntado(Apuntado apuntado) {
+	//	if (apuntados==null) {
+	//		apuntados=new HashSet<Apuntado>();
+//			apuntados=new ArrayList<Apuntado>();
+	//	}
+	//	apuntados.add(apuntado);
+	//	apuntado.setJugador(this);
+	//}
+	
+	//public List<Apuntado> getApuntados() {
+	//	return apuntados;
+	//}
+	
+	//public Set<Apuntado> getApuntados() {
+	//	return apuntados;
+	//}
 	
 	public void addApuntado(Apuntado apuntado) {
 		if (apuntados==null) {
-			apuntados=new ArrayList<Apuntado>();
+			apuntados=new HashSet<Apuntado>();
 		}
 		apuntados.add(apuntado);
 		apuntado.setJugador(this);
 	}
 	
-	public List<Apuntado> getApuntados() {
+	public Set<Apuntado> getApuntados() {
 		return apuntados;
 	}
-	
-	//@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	//		fetch=FetchType.LAZY)
-	//@JoinColumn(name="idcategory")
-	//private Category category;
 	
 	public Jugador() {
 

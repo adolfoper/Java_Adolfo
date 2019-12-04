@@ -34,6 +34,13 @@ public class JugadorService implements IJugadorService {
 		
 		return jugadorDAO.getJugador(idjugador);
 	}
+	
+	@Override
+	@Transactional
+	public Jugador getJugador(String username) {
+		
+		return jugadorDAO.getJugador(username);
+	}
 
 	@Override
 	@Transactional

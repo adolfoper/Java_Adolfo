@@ -7,7 +7,7 @@ import club.model.Apuntado;
 public interface IApuntadoService {
 	List<Apuntado> getApuntados();
 	
-	List<Apuntado> getApuntados(int idpartida);
+	//List<Apuntado> getApuntados(int idpartida);
 
 	void save(Apuntado apuntado);
 

@@ -10,6 +10,8 @@ public interface IJugadorService {
 	void save(Jugador jugador);
 
 	Jugador getJugador(int idjugador);
+	
+	Jugador getJugador(String username);
 
 	void delete(Jugador jugador);
 }

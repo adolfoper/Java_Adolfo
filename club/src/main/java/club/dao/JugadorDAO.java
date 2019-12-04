@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.hibernate.query.Query;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import club.model.Jugador;
 
@@ -22,10 +25,37 @@ public class JugadorDAO implements IJugadorDAO {
 	}
 	
 	@Override
+	public Jugador getJugador(String username) {
+		Session miSesion=sessionFactory.getCurrentSession();
+		
+		@SuppressWarnings("rawtypes")
+		Query q = miSesion.createQuery
+				("from Jugador where username = :u");
+		q.setParameter("u",username);  
+
+		@SuppressWarnings("rawtypes")
+		List results = q.getResultList();
+		
+		Jugador jugador = null;
+		if(!results.isEmpty()){
+			// ignores multiple results
+		    List<Jugador> results2 = typesafeAdd(results, new ArrayList<Jugador>(), Jugador.class);
+			jugador = results2.get(0);
+		}
+		
+		//Jugador jugador = new Jugador();
+		//jugador = q.getSingleResult();
+		
+		//		Jugador jugador = miSesion.createQuery("from Jugadores where username = username", Jugador.class).getSingleResult();
+		
+		return jugador;
+	}
+	
+	@Override
 	public List<Jugador> getJugadores() {
 		Session miSesion = sessionFactory.getCurrentSession();
 
-		List<Jugador> jugadores = miSesion.createQuery("from Jugadores", Jugador.class).list();
+		List<Jugador> jugadores = miSesion.createQuery("from Jugador", Jugador.class).list();
 		return jugadores;
 	}
 
@@ -42,4 +72,11 @@ public class JugadorDAO implements IJugadorDAO {
 
 	}
 
+	private <T, C extends Collection<T>> C typesafeAdd(Iterable<?> from, 
+				  C to, Class<T> listClass) {
+	    for (Object item: from) {
+	      to.add(listClass.cast(item));
+	    }
+	    return to;
+	  }
 }

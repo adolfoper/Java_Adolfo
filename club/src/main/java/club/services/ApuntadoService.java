@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import club.dao.IApuntadoDAO;
 import club.model.Apuntado;
+//import club.model.ApuntadoId;
 
 @Service("apuntadoService")
 public class ApuntadoService implements IApuntadoService {
@@ -21,11 +22,11 @@ public class ApuntadoService implements IApuntadoService {
 		return apuntadoDAO.getApuntados();
 	}
 	
-	@Override
-	@Transactional
-	public List<Apuntado> getApuntados(int idpartida) {
-		return apuntadoDAO.getApuntados(idpartida);
-	}
+	//@Override
+	//@Transactional
+	//public List<Apuntado> getApuntados(int idpartida) {
+	//	return apuntadoDAO.getApuntados(idpartida);
+	//}
 
 	@Override
 	@Transactional

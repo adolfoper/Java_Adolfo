@@ -10,15 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-//import org.hibernate.annotations.Type;
 
 import club.model.Jugador;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "partidas")
@@ -57,6 +56,8 @@ public class Partida {
 	//@Type(type = "time")
 	@Column(name = "horafin")
 	private Time horafin;
+	
+	private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
 
 	public Partida() {
 
@@ -79,10 +80,27 @@ public class Partida {
 	//@OneToMany(mappedBy = "partida", cascade = CascadeType.ALL)
     //private Set<BookPublisher> bookPublishers;
 	
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
-			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	private List<Partida> apuntados;
+	//@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
+	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	//private List<Apuntado> apuntados;
+	//private Set<Apuntado> apuntados = new HashSet<>();
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.partida", cascade=CascadeType.ALL)
+	public Set<Apuntado> getApuntado() {
+		return this.apuntados;
+	}
+	
+	public void addApuntado(Apuntado apuntado) {
+		if (apuntados==null) {
+			apuntados=new HashSet<Apuntado>();
+		}
+		apuntados.add(apuntado);
+		apuntado.setPartida(this);
+	}
+	
+	public Set<Apuntado> getApuntados() {
+		return apuntados;
+	}
 	
 	//@OneToMany(fetch = FetchType.EAGER,mappedBy="cpartida",
 	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

@@ -8,6 +8,8 @@ public interface IJugadorDAO {
 	
 	Jugador getJugador(int idjugador);
 	
+	Jugador getJugador(String username);
+	
 	List<Jugador> getJugadores();
 
 	void save(Jugador jugador);
