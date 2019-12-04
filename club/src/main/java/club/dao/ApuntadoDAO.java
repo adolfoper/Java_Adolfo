@@ -29,13 +29,13 @@ public class ApuntadoDAO implements IApuntadoDAO {
 		return apuntados;
 	}
 	
-	@Override
-	public List<Apuntado> getApuntados(int idpartida) {
-		Session miSesion = sessionFactory.getCurrentSession();
-		List<Apuntado> apuntados=miSesion.createQuery("from Partida where idpartida=:idpartida", 
-		Apuntado.class).setParameter("idpartida", idpartida).list();	
-		return apuntados;
-	}
+	//@Override
+	//public List<Apuntado> getApuntados(int idpartida) {
+	//	Session miSesion = sessionFactory.getCurrentSession();
+	//	List<Apuntado> apuntados=miSesion.createQuery("from Partida where idpartida=:idpartida", 
+	//	Apuntado.class).setParameter("idpartida", idpartida).list();	
+	//	return apuntados;
+	//}
 
 	@Override
 	public void save(Apuntado apuntado) {

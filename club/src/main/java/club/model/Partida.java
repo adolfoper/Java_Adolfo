@@ -16,8 +16,10 @@ import club.model.Jugador;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.Set;
+//import java.util.HashSet;
+//import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "partidas")
@@ -57,7 +59,7 @@ public class Partida {
 	@Column(name = "horafin")
 	private Time horafin;
 	
-	private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
+	// private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
 
 	public Partida() {
 
@@ -75,36 +77,30 @@ public class Partida {
 		this.horainicio = horainicio;
 		this.horafin = horafin;
 	}
-
 	
-	//@OneToMany(mappedBy = "partida", cascade = CascadeType.ALL)
-    //private Set<BookPublisher> bookPublishers;
-	
-	//@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
-	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	//private List<Apuntado> apuntados;
-	//private Set<Apuntado> apuntados = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.partida", cascade=CascadeType.ALL)
-	public Set<Apuntado> getApuntado() {
-		return this.apuntados;
-	}
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="partida",
+			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	private List<Apuntado> apuntados;
 	
 	public void addApuntado(Apuntado apuntado) {
 		if (apuntados==null) {
-			apuntados=new HashSet<Apuntado>();
+	//		apuntados=new HashSet<Apuntado>();
+			apuntados=new ArrayList<Apuntado>();
 		}
 		apuntados.add(apuntado);
 		apuntado.setPartida(this);
 	}
 	
-	public Set<Apuntado> getApuntados() {
-		return apuntados;
-	}
+	//private Set<Apuntado> apuntados = new HashSet<>();
 	
-	//@OneToMany(fetch = FetchType.EAGER,mappedBy="cpartida",
-	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	//private List<Jugador> products;
+	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.partida", cascade=CascadeType.ALL)
+	//public Set<Apuntado> getApuntado() {
+	//	return this.apuntados;
+	//}
+	
+	//public Set<Apuntado> getApuntados() {
+	//	return apuntados;
+	//}
 	
 	@Override
 	public String toString() {

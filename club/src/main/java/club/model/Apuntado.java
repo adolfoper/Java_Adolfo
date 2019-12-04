@@ -7,10 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.persistence.AssociationOverrides;
-import javax.persistence.AssociationOverride;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Transient;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+//import javax.persistence.AssociationOverrides;
+//import javax.persistence.AssociationOverride;
+//import javax.persistence.EmbeddedId;
+//import javax.persistence.Transient;
 //import java.io.Serializable;
 //import org.hibernate.annotations.Type;
 
@@ -18,11 +21,11 @@ import club.model.Jugador;
 
 @Entity
 @Table(name = "apuntados")
-@AssociationOverrides({
-	@AssociationOverride(name = "pk.jugador", 
-		joinColumns = @JoinColumn(name = "idjugador")),
-	@AssociationOverride(name = "pk.partida", 
-		joinColumns = @JoinColumn(name = "idpartida")) })
+//@AssociationOverrides({
+//	@AssociationOverride(name = "pk.jugador", 
+//		joinColumns = @JoinColumn(name = "idjugador")),
+//	@AssociationOverride(name = "pk.partida", 
+//		joinColumns = @JoinColumn(name = "idpartida")) })
 public class Apuntado {
 
 	@Id
@@ -30,47 +33,51 @@ public class Apuntado {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idapuntado;
 	
-	//@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	//fetch=FetchType.LAZY)
-	//@JoinColumn(name="idpartida")
-	//private Partida partida;
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+	fetch=FetchType.LAZY)
+	@JoinColumn(name="idpartida")
+	private Partida partida;
 	
-	//@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	//fetch=FetchType.LAZY)
-	//@JoinColumn(name="idjugador")
-	//private Jugador jugador;
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+	fetch=FetchType.LAZY)
+	@JoinColumn(name="idjugador")
+	private Jugador jugador;
 	
-	private ApuntadoId pk = new ApuntadoId();
+	//private ApuntadoId pk = new ApuntadoId();
 	
-	@EmbeddedId
-	public ApuntadoId getPk() {
-		return pk;
-	}
+	//@EmbeddedId
+	//public ApuntadoId getPk() {
+	//	return pk;
+	//}
 
-	public void setPk(ApuntadoId pk) {
-		this.pk = pk;
-	}
+	//public void setPk(ApuntadoId pk) {
+	//	this.pk = pk;
+	//}
 	
-	@Transient
-	public Partida getPartida() {
-		return getPk().getPartida();
-	}
+	//@Transient
+	//public Partida getPartida() {
+	//	return getPk().getPartida();
+	//}
 
-	public void setPartida(Partida partida) {
-		getPk().setPartida(partida);
-	}
+	//public void setPartida(Partida partida) {
+	//	getPk().setPartida(partida);
+	//}
 
-	@Transient
-	public Jugador getJugador() {
-		return getPk().getJugador();
-	}
+	//@Transient
+	//public Jugador getJugador() {
+	//	return getPk().getJugador();
+	//}
 
-	public void setJugador(Jugador jugador) {
-		getPk().setJugador(jugador);
-	}
+	//public void setJugador(Jugador jugador) {
+	//	getPk().setJugador(jugador);
+	//}
 	
 	@Column(name = "comentarios")
 	private String comentarios;
+	
+	public Apuntado() {
+
+	}
 
 	public Apuntado(Partida partida, Jugador jugador, String comentarios) {
 		super();
@@ -81,7 +88,6 @@ public class Apuntado {
 		this.comentarios = comentarios;
 	}
 
-
 	public Apuntado(String comentarios) {
 		super();
 		this.comentarios = comentarios;
@@ -89,8 +95,8 @@ public class Apuntado {
 
 	@Override
 	public String toString() {
-		return "Apuntado [idapuntado=" + idapuntado + ", partida=" + getPartida() + 
-				", jugadores=" + getJugador() + "]";
+		return "Apuntado [idapuntado=" + idapuntado + ", partida=" + partida + 
+				", jugador=" + jugador + "]";
 	}
 
 
@@ -104,25 +110,24 @@ public class Apuntado {
 	}
 
 
-	//public Partida getPartida() {
-	//	return partida;
-	//}
+	public Partida getPartida() {
+		return partida;
+	}
 
 
-	//public void setPartida(Partida partida) {
-	//	this.partida = partida;
-	//}
+	public void setPartida(Partida partida) {
+		this.partida = partida;
+	}
 
 
-	//public Jugador getJugador() {
-	//	return jugador;
-	//}
+	public Jugador getJugador() {
+		return jugador;
+	}
 
-
-	//public void setJugador(Jugador jugador) {
-	//	this.jugador = jugador;
-	//}
-
+	
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+	}
 
 	public String getComentarios() {
 		return comentarios;

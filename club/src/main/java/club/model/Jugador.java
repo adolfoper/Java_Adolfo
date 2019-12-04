@@ -15,9 +15,9 @@ import javax.persistence.Table;
 import club.model.Partida;
 
 import java.sql.Date;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+//import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,54 +52,48 @@ public class Jugador {
 	@Column(name = "fechaalta")
 	private Date fechaalta;
 	
-	private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
-	
 	// Relacion como creador de partidas
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	private List<Partida> partidas;
+	//private List<Partida> partidas;
+	private Set<Partida> partidas = new HashSet<Partida>(0);
 	
 	public void addPartida(Partida partida) {
 		if (partidas==null) {
-			partidas=new ArrayList<Partida>();
+			//partidas=new ArrayList<Partida>();
+			partidas=new HashSet<Partida>(0);
 		}
 		partidas.add(partida);
 		partida.setJugador(this);
 	}
 	
-	public List<Partida> getPartidas() {
+	//public List<Partida> getPartidas() {
+	//	return partidas;
+	//}
+	
+	public Set<Partida> getPartidas() {
 		return partidas;
 	}
 	
-	//@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
-	//		cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	////private List<Apuntado> apuntados;
-	//private Set<Apuntado> apuntados = new HashSet<>();
 	
-	//public void addApuntado(Apuntado apuntado) {
-	//	if (apuntados==null) {
-	//		apuntados=new HashSet<Apuntado>();
-//			apuntados=new ArrayList<Apuntado>();
-	//	}
-	//	apuntados.add(apuntado);
-	//	apuntado.setJugador(this);
-	//}
-	
-	//public List<Apuntado> getApuntados() {
-	//	return apuntados;
-	//}
-	
-	//public Set<Apuntado> getApuntados() {
-	//	return apuntados;
-	//}
+	// Relacion con apuntado
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
+			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	//private List<Apuntado> apuntados;
+	private Set<Apuntado> apuntados = new HashSet<>();
 	
 	public void addApuntado(Apuntado apuntado) {
 		if (apuntados==null) {
 			apuntados=new HashSet<Apuntado>();
+			//apuntados=new ArrayList<Apuntado>();
 		}
 		apuntados.add(apuntado);
 		apuntado.setJugador(this);
 	}
+	
+	//public List<Apuntado> getApuntados() {
+	//	return apuntados;
+	//}
 	
 	public Set<Apuntado> getApuntados() {
 		return apuntados;

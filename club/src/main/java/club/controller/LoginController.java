@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import club.model.Jugador;
 import club.services.IJugadorService;
 
-import java.util.List;
+//import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +48,6 @@ public class LoginController {
         }
 		
         return "redirect:/";
-		
 	}
+
 }

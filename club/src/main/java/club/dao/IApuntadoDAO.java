@@ -10,7 +10,7 @@ public interface IApuntadoDAO {
 	
 	List<Apuntado> getApuntados();
 	
-	List<Apuntado> getApuntados(int idpartida);
+	//List<Apuntado> getApuntados(int idpartida);
 
 	void save(Apuntado apuntado);
 
