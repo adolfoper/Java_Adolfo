@@ -58,31 +58,36 @@
 				<th>Fecha partida</th>
 				<th>Hora ini.</th>
 				<th>Hota fin</th>
+				
 				<th>Num apuntados</th>
 				<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 					<th>Acciones</th>
 				</sec:authorize>
 			</tr>
 
-			<c:forEach var="partida" items="${partidas}">
-				<c:url var="linkEditar" value="/gerente/updatepartida">
-					<c:param name="idpartida" value="${category.idpartida }" />
+			<c:forEach var="lineas" items="${lineas}">
+				<c:url var="linkEditar" value="/socio/updatepartida">
+					<c:param name="idpartida" value="${lineas.idpartida }" />
 				</c:url>
-				<c:url var="linkBorrar" value="/admin/deletepartida">
-					<c:param name="idcategory" value="${category.idpartida }" />
+				<c:url var="linkBorrar" value="/socio/deletepartida">
+					<c:param name="idcategory" value="${lineas.idpartida }" />
 				</c:url>
 				<c:url var="linkApuntados" value="/apuntados">
-					<c:param name="id" value="${category.idpartida }" />
+					<c:param name="id" value="${lineas.idpartida }" />
 				</c:url>
 				<tr>
-					<td>${category.idcategory }</td>
-					<td>${category.name }</td>
-					<td>${category.description }</td>
-					<td><a href="${linkProducts }">${fn:length(category.products) }</a></td>
-					<sec:authorize access="hasAnyRole('GERENTE','ADMIN')">
-						<td><sec:authorize access="hasAnyRole('GERENTE','ADMIN')">
+					<td>${lineas.juego }</td>
+					<td>${lineas.jugador.idjugador }</td>
+					<td>${lineas.plazasmin }</td>
+					<td>${lineas.plazasmax }</td>
+					<td>${lineas.fechapartida }</td>
+					<td>${lineas.horainicio }</td>
+					<td>${lineas.horafin }</td>
+					<td><a href="${linkProducts }">${fn:length(lineas.jugadores) }</a></td>
+					<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
+						<td><sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 								<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Editar</a>
-							</sec:authorize> <sec:authorize access="hasRole('ADMIN')">
+							</sec:authorize> <sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 								<a href="${linkBorrar }"
 									onclick="if(!confirm('¿Está seguro?')) return false"
 									class="btn btn-outline-danger btn-sm">Borrar</a>

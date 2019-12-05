@@ -183,4 +183,13 @@ public class Partida {
 		this.horafin = horafin;
 	}
 
+	public List<Apuntado> getApuntados() {
+		return apuntados;
+	}
+
+
+	public void setApuntados(List<Apuntado> apuntados) {
+		this.apuntados = apuntados;
+	}
+
 }

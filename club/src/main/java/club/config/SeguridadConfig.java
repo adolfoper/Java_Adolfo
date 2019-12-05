@@ -39,7 +39,7 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/administrador/**").hasRole("ADMINISTRADOR")
 				.and().formLogin().loginPage("/formlogin")
 //				.loginProcessingUrl("/authenticateTheUser").permitAll().and().logout().permitAll().and()
-				.loginProcessingUrl("/authenticateTheUser").permitAll().defaultSuccessUrl("/checkrol", true)
+				.loginProcessingUrl("/authenticateTheUser").permitAll().defaultSuccessUrl("/index2", true)
 				.and().exceptionHandling().accessDeniedPage("/prohibido");
 	}
 
