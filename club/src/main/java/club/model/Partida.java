@@ -31,7 +31,7 @@ public class Partida {
 	private int idpartida;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	fetch=FetchType.LAZY)
+	fetch=FetchType.EAGER)
 	@JoinColumn(name="idjugador")
 	private Jugador jugador;
 	

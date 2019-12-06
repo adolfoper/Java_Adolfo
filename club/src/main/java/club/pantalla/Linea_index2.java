@@ -21,9 +21,7 @@ public class Linea_index2 {
 	
 	private String comentarios;
 
-	private String plazasmin;
-	
-	private String plazasmax;
+	private String plazas;
 
 	private String fechapartida;
 
@@ -39,21 +37,16 @@ public class Linea_index2 {
         System.out.println("** SetfromBD");
         
 		this.idpartida = partida.getIdpartida();	
-        System.out.println("** Antes de obtener jugador");
-        Jugador jugador = partida.getJugador();
-        System.out.println("** Despues de obtener jugador");
-        System.out.println(jugador);
 		this.creador = partida.getJugador().getNombre();	
-        System.out.println("** Despues de obtener nombre jugador");
 		this.juego = partida.getJuego();		
 		this.comentarios = partida.getComentarios();
-		this.plazasmin = Integer.toString(partida.getPlazasmin());		
-		this.plazasmax = Integer.toString(partida.getPlazasmax());
+		this.plazas = Integer.toString(partida.getPlazasmin())+ "-" + 		
+					  Integer.toString(partida.getPlazasmax());
 
 		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
 		this.fechapartida = fecha.format(partida.getFechapartida());
 
-		DateFormat hora = new SimpleDateFormat("hh:mm");
+		DateFormat hora = new SimpleDateFormat("HH:mm");
 		this.horainicio = hora.format(partida.getHorainicio());		
 		this.horafin = hora.format(partida.getHorafin());
 		this.numApuntados = partida.getApuntados().size();
@@ -83,20 +76,12 @@ public class Linea_index2 {
 		this.comentarios = comentarios;
 	}
 
-	public String getPlazasmin() {
-		return plazasmin;
+	public String getPlazas() {
+		return plazas;
 	}
 
-	public void setPlazasmin(String plazasmin) {
-		this.plazasmin = plazasmin;
-	}
-
-	public String getPlazasmax() {
-		return plazasmax;
-	}
-
-	public void setPlazasmax(String plazasmax) {
-		this.plazasmax = plazasmax;
+	public void setPlazas(String plazas) {
+		this.plazas = plazas;
 	}
 
 	public String getFechapartida() {

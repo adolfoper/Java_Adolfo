@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div class="container">
-		<h2>Login</h2>
+		<h1>Club de juegos Draco </h1>
 		
 		<c:if test="${param.error!=null}">
 			<div class="alert alert-danger">
@@ -60,5 +60,6 @@
 			<button type="submit" class="btn btn-primary">Login</button>
 		</form:form>
 	</div>
+	<br><a href="index">Volver a la página principal</a> 
 </body>
 </html>

@@ -29,23 +29,21 @@ public class LoginController {
 	
 	@GetMapping("/formlogin")
 	public String formLogin() {
-		System.out.println("formlogin 1");
+		System.out.println("LoginController /formlogin");
+        System.out.println("--> login");
 		return"login";
 	}
 	
 	@GetMapping("/index2")
 	public String index2(HttpServletRequest request, Model modelo) {
-		System.out.println("index2");
+		System.out.println("LoginController /index2");
 		System.out.println(request.getUserPrincipal().getName());
 			
 		String name = request.getUserPrincipal().getName();
 		Jugador perfil = jugadorService.getJugador(name);
         System.out.println("** Perfil:"+perfil);
-        System.out.println("** A cargar partidas");
 		List<Partida> partidas = partidaService.getPartidas();
-        System.out.println("** Partidas cargadas");
 		List<Linea_index2> lineas = new ArrayList<Linea_index2>();
-        System.out.println("** Lineas creada");
 
 		for (Partida partida:partidas) {
 			Linea_index2 inter= new Linea_index2();
@@ -56,8 +54,6 @@ public class LoginController {
 		
 		modelo.addAttribute("lineas", lineas);
 		System.out.println("lineas:"+lineas);
-		Partida partida = partidas.get(0);
-		System.out.println("jugador 0:"+partida.getApuntados());
 		
         //if (request.isUserInRole("ROLE_ADMINISTRADOR")) {
         //   System.out.println("Administrador");
@@ -74,6 +70,7 @@ public class LoginController {
         //}
 		
         //return "redirect:/";
+        System.out.println("--> index2");
 		return"index2";
 	}
 

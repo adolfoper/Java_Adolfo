@@ -41,11 +41,10 @@
 			<div>
 				<h1>Partidas abiertas</h1>
 			</div>
-
-
 		</div>
+		
 		<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-			<a href="${pageContext.request.contextPath}/gerente/addpartida"
+			<a href="${pageContext.request.contextPath}/partida/addpartida"
 				class="btn btn-primary mb-1">Crear partida</a>
 		</sec:authorize>
 
@@ -53,13 +52,12 @@
 			<tr>
 				<th>Juego</th>
 				<th>Creador</th>
-				<th>Plazas min.</th>
-				<th>Plazas max.</th>
 				<th>Fecha partida</th>
-				<th>Hora ini.</th>
-				<th>Hota fin</th>
-				
-				<th>Num apuntados</th>
+				<th>Hora inicio</th>
+				<th>Hota fin</th>	
+				<th>Plazas</th>		
+				<th>Jugadores apuntados</th>
+				<th>Comentarios</th>
 				<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 					<th>Acciones</th>
 				</sec:authorize>
@@ -77,13 +75,13 @@
 				</c:url>
 				<tr>
 					<td>${lineas.juego }</td>
-					<td>${lineas.jugador.idjugador }</td>
-					<td>${lineas.plazasmin }</td>
-					<td>${lineas.plazasmax }</td>
+					<td>${lineas.creador }</td>
 					<td>${lineas.fechapartida }</td>
 					<td>${lineas.horainicio }</td>
 					<td>${lineas.horafin }</td>
-					<td><a href="${linkProducts }">${fn:length(lineas.jugadores) }</a></td>
+					<td>${lineas.plazas }</td>
+					<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="${linkApuntados }">${lineas.numApuntados}</a></td>
+					<td>${lineas.comentarios }</td>
 					<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 						<td><sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 								<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Editar</a>
