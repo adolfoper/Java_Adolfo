@@ -3,6 +3,7 @@ package club.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -48,20 +49,25 @@ public class PartidaController {
 	}
 	
 	//public String procesar_alta_partida(HttpServletRequest request, Model modelo) {
-	@GetMapping("/procesar_alta_partida")
+	@PostMapping("/procesar_alta_partida")
 	public String procesar_alta_partida(HttpServletRequest request, 
 										@Valid @ModelAttribute("form_partida") Form_partida form_partida, 
 										BindingResult bindingResult) { 
 //	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
 // 				BindingResult bindingResult) {
 		
-		System.out.println("PartidaController /alta_partida");
+		System.out.println("PartidaController /procesar_alta_partida");
         
+		form_partida.setMensaje("");
 		if (bindingResult.hasErrors()) { 
 			System.out.println("Con errores");
 			return "alta_partida"; 
 		} 
 		else {
+			if (!form_partida.validar()) {
+				System.out.println("Error de horas");
+				return "alta_partida"; 
+			}
 			System.out.println("Sin errores");
 			
 			String name = request.getUserPrincipal().getName();
@@ -69,7 +75,7 @@ public class PartidaController {
 	        System.out.println("** Perfil:"+perfil);
 	        
 	        Partida partida = form_partida.getToBD(perfil);
-	        System.out.println("** Partida convertida");
+	        System.out.println("** Partida convertida:"+partida);
 			partidaService.save(partida);	
 	        System.out.println("** Partida grabada");
 	        System.out.println("--> index2");
