@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Alta de partida</title>
+<title>Modificar partida</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -30,16 +30,16 @@
 			</form:form>
 		</div>
 		<div>
-			<h1>Alta de partida</h1>
+			<h1>Modificar partidar</h1>
 		</div>
 	</div>
 </div>
 <br />
 
-<form:form action="procesar_alta_partida" modelAttribute="form_partida" method="post">
+<form:form action="procesar_modif_partida" modelAttribute="form_partida" method="post">
 	
-	<form:hidden path="idpartida" value="0"/>
-	
+	<form:hidden path="idpartida"/>
+		
 	&nbsp;&nbsp;&nbsp;&nbsp;Juego:&nbsp; <form:input size="50" path="juego" />*
 		<form:errors path="juego" cssClass="error" />
 	<br /> <br />
@@ -56,7 +56,7 @@
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;Horario previsto de:&nbsp; <form:input size="1" path="horainicio"/>
 		<form:errors path="horainicio" cssClass="error" />
-	&nbsp; a &nbsp;<form:input size="1" path="horafin" />* <!-- &nbsp;&nbsp;<font color="red">${form_partida.mensaje}</font>-->
+	&nbsp; a &nbsp;<form:input size="1" path="horafin" />* <!--&nbsp;&nbsp;<font color="red">${form_partida.mensaje}</font>  -->
 		<form:errors path="horafin" cssClass="error" />
 	<br/> <br />
 	
@@ -64,7 +64,7 @@
 		<form:errors path="comentarios" cssClass="error" />
 	<br/> <br />
 
-	&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary mb-1" type="submit" name="Alta" value="Alta" >Alta</button>
+	&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary mb-1" type="submit" name="Modificar" value="Modificar" >Modificar</button>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="red">${form_partida.mensaje}</font>
 	<br/><br/>
 </form:form>

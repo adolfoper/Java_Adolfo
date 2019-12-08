@@ -104,7 +104,7 @@ public class Partida {
 	
 	@Override
 	public String toString() {
-		return "Jugador [idjpartida=" + idpartida + ", juego=" + juego + 
+		return "Jugador [idpartida=" + idpartida + ", juego=" + juego + 
 				", comentarios=" + comentarios + ", plazasmin=" + plazasmin +
 				", plazasmax=" + plazasmax + ", fechapartida=" + fechapartida + 
 				", horainicio=" + horainicio + ", horafin=" + horafin + "]";

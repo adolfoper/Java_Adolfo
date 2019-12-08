@@ -22,7 +22,7 @@ public class CValidarFecha implements ConstraintValidator<ValidarFecha, String> 
 		boolean valido = true;
 		
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");       
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");       
             date = sdf.parse(fecha);
         } 
         catch (ParseException ex) {

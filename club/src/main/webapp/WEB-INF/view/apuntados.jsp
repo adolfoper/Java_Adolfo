@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Partidas</title>
+<title>Apuntados a la partida</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -39,58 +39,58 @@
 				</form:form>
 			</div>
 			<div>
-				<h1>Partidas abiertas</h1>
+				<h1>Apuntados a la partida</h1>
 			</div>
 		</div>
 		
-		<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-			<a href="${pageContext.request.contextPath}/partida/addpartida"
-				class="btn btn-primary mb-1">Crear partida</a>
-		</sec:authorize>
+		<!--  {if ${apuntado} = "true"}
+			<a href="${pageContext.request.contextPath}/apuntado/alta_apuntado"
+				class="btn btn-primary mb-1">Apuntarse</a>-->
+
 
 		<table class="table table-striped">
 			<tr>
-				<th>Juego</th>
-				<th>Creador</th>
-				<th>Fecha partida</th>
-				<th>Hora inicio</th>
-				<th>Hota fin</th>	
-				<th>Plazas</th>		
-				<th>Jugadores apuntados</th>
+				<th>___</th>
+				<th>Jugador</th>
 				<th>Comentarios</th>
-				<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-					<th>Acciones</th>
-				</sec:authorize>
+				<th>Acciones</th>
 			</tr>
 
 			<c:forEach var="lineas" items="${lineas}">
-				<c:url var="linkEditar" value="/partida/updatepartida">
-					<c:param name="idpartida" value="${lineas.idpartida }" />
+				<c:url var="linkEditar" value="/partida/updateapuntado">
+					<c:param name="idapuntado" value="${lineas.idapuntado}" />
 				</c:url>
-				<c:url var="linkBorrar" value="/partida/deletepartida">
-					<c:param name="idpartida" value="${lineas.idpartida }" />
+				<c:url var="linkBorrar" value="/partida/deleteapuntado">
+					<c:param name="idapuntado" value="${lineas.idapuntado }" />
 				</c:url>
-				<c:url var="linkApuntados" value="/apuntado/apuntados">
-					<c:param name="id" value="${lineas.idpartida }" />
+				<c:url var="linkAdd" value="/addapuntado">
+					<c:param name="idpartida" value="${partida.idpartida}" />
 				</c:url>
 				<tr>
-					<td>${lineas.juego }</td>
-					<td>${lineas.creador }</td>
-					<td>${lineas.fechapartida }</td>
-					<td>${lineas.horainicio }</td>
-					<td>${lineas.horafin }</td>
-					<td>${lineas.plazas }</td>
-					<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="${linkApuntados }">${lineas.numApuntados}</a></td>
-					<td>${lineas.comentarios }</td>
-					<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-						<td><sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-								<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Editar</a>
-							</sec:authorize> <sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
+					<td>${lineas.numero}</td>
+					<td>${lineas.nombre}</td>
+					<td>
+						if ${apuntado} = "true" {
+							<form:input size="100" path="comentarios"/>
+						}
+						else {
+							${lineas.comentarios}
+						}
+					</td>
+					<td>
+						if ${apuntado} = "true" {
+							if ${idapuntado} > 0 {
+								<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
 								<a href="${linkBorrar }"
 									onclick="if(!confirm('¿Está seguro?')) return false"
-									class="btn btn-outline-danger btn-sm">Borrar</a>
-							</sec:authorize></td>
-					</sec:authorize>
+									class="btn btn-outline-danger btn-sm">Desapuntar
+								</a>
+							}
+							else {
+								<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Apuntar</a>
+							}	
+						}
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

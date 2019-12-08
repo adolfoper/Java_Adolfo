@@ -2,6 +2,8 @@ package club.pantalla;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -52,7 +54,7 @@ public class Form_partida {
 	public Form_partida() {
 		super();
 		LocalDate date = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("** Creando form_partida");
 		System.out.println(date.format(formatter));
 		this.fechapartida = date.format(formatter);
@@ -77,6 +79,7 @@ public class Form_partida {
 		Partida partida = new Partida();
         System.out.println("** getToBD");
 		
+        partida.setIdpartida(this.idpartida);
 		partida.setJugador(jugador);
 		partida.setJuego(this.juego);
 		partida.setComentarios(this.comentarios);
@@ -86,11 +89,32 @@ public class Form_partida {
 		String fecha = this.fechapartida.substring(6, 10) +
 						this.fechapartida.substring(2, 6) +
 						this.fechapartida.substring(0, 2);
+		fecha.replace('/', '-');
 		
 		partida.setFechapartida(Date.valueOf(fecha));
 		partida.setHorainicio(Time.valueOf(this.horainicio+":00"));
 		partida.setHorafin(Time.valueOf(this.horafin+":00"));
 		return partida;
+	}
+	
+	// Obtener valores de BD
+	public void setFromBD(Partida partida) {
+		
+        System.out.println("** setFromBD");
+		
+		this.idpartida = partida.getIdpartida();	
+		this.creador = partida.getJugador().getNombre();	
+		this.juego = partida.getJuego();
+		this.comentarios = partida.getComentarios();		
+		this.plazasmin = Integer.toString(partida.getPlazasmin()); 		
+		this.plazasmax = Integer.toString(partida.getPlazasmax());
+		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
+		this.fechapartida = fecha.format(partida.getFechapartida());
+
+		DateFormat hora = new SimpleDateFormat("HH:mm");
+		this.horainicio = hora.format(partida.getHorainicio());		
+		this.horafin = hora.format(partida.getHorafin());
+		this.mensaje = "";
 	}
 
 	public String getCreador() {

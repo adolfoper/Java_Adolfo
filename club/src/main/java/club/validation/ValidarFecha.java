@@ -12,7 +12,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface ValidarFecha {
-	String message() default"La fecha ha de ser igual o posterior a hoy y formato DD-MM-AAAA";
+	String message() default"La fecha ha de ser igual o posterior a hoy y formato DD/MM/AAAA";
 	Class<?>[] groups() default{};
 	Class<? extends Payload>[] payload() default{};
 }

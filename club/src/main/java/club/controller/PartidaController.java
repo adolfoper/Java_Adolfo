@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -33,16 +34,43 @@ public class PartidaController {
 	private IPartidaService partidaService;
 	
 	@GetMapping("/addpartida")
-	public String addpartida(HttpServletRequest request, Model modelo) {
+//	public String addpartida(HttpServletRequest request, Model modelo) {
+ 	public String addpartida(Model modelo) {
 		System.out.println("PartidaController /addpartida");
 
 		Form_partida form_partida = new Form_partida();
 		modelo.addAttribute("form_partida", form_partida);
 		
-        System.out.println("--> index2");
+        System.out.println("--> alta_partida");
 		return"alta_partida";
 	}
 	
+	@GetMapping("/updatepartida")
+	public String updatepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
+		System.out.println("PartidaController /updatepartida");
+
+		Partida partida = partidaService.getPartida(idpartida);
+		Form_partida form_partida = new Form_partida();
+		form_partida.setFromBD(partida);
+		modelo.addAttribute("form_partida", form_partida);
+        System.out.println("** ID:"+form_partida.getIdpartida());
+		
+        System.out.println("--> modif_partida");
+		return"modif_partida";
+	}
+	
+	@GetMapping("/deletepartida")
+	public String deletepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
+		System.out.println("PartidaController /deletepartida");
+
+		Partida partida = partidaService.getPartida(idpartida);
+		int idjugador=partida.getJugador().getIdjugador();
+		partidaService.delete(partida);
+		
+        System.out.println("--> index2");
+        return "redirect:/index2";
+	}
+		
 	@GetMapping("/cancel")
 	public String cancel (HttpServletRequest request, Model modelo) {
         return "redirect:/index2";
@@ -75,6 +103,42 @@ public class PartidaController {
 	        System.out.println("** Perfil:"+perfil);
 	        
 	        Partida partida = form_partida.getToBD(perfil);
+	        System.out.println("** Partida convertida:"+partida);
+			partidaService.save(partida);	
+	        System.out.println("** Partida grabada");
+	        System.out.println("--> index2");
+	        return "redirect:/index2";
+		}
+	}
+	
+	@PostMapping("/procesar_modif_partida")
+	public String procesar_modif_partida(HttpServletRequest request, 
+										@Valid @ModelAttribute("form_partida") Form_partida form_partida, 
+										BindingResult bindingResult) { 
+//	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
+// 				BindingResult bindingResult) {
+		
+		System.out.println("PartidaController /procesar_modif_partida");
+        
+		form_partida.setMensaje("");
+		if (bindingResult.hasErrors()) { 
+			System.out.println("Con errores");
+			return "modif_partida"; 
+		} 
+		else {
+			if (!form_partida.validar()) {
+				System.out.println("Error de horas");
+				return "modif_partida"; 
+			}
+			System.out.println("Sin errores");
+			
+			String name = request.getUserPrincipal().getName();
+			Jugador perfil = jugadorService.getJugador(name);
+	        System.out.println("** Perfil:"+perfil);
+	        System.out.println("** ID:"+form_partida.getIdpartida());
+	        
+	        Partida partida = form_partida.getToBD(perfil);
+	        System.out.println("** ID:"+partida.getIdpartida());
 	        System.out.println("** Partida convertida:"+partida);
 			partidaService.save(partida);	
 	        System.out.println("** Partida grabada");

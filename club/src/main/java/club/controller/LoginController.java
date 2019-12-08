@@ -46,9 +46,9 @@ public class LoginController {
 		List<Linea_index2> lineas = new ArrayList<Linea_index2>();
 
 		for (Partida partida:partidas) {
-			Linea_index2 inter= new Linea_index2();
-			inter.setFromBD(partida);
-			lineas.add(inter);
+			Linea_index2 linea= new Linea_index2();
+			linea.setFromBD(partida);
+			lineas.add(linea);
 		}
         System.out.println("** Lineas cargadas");
 		
