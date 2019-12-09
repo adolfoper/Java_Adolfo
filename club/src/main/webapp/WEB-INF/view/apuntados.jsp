@@ -50,50 +50,55 @@
 
 		<table class="table table-striped">
 			<tr>
-				<th>___</th>
+				<th>Numero</th>
 				<th>Jugador</th>
 				<th>Comentarios</th>
-				<th>Acciones</th>
+				<th></th>
 			</tr>
 
 			<c:forEach var="lineas" items="${lineas}">
-				<c:url var="linkEditar" value="/partida/updateapuntado">
-					<c:param name="idapuntado" value="${lineas.idapuntado}" />
-				</c:url>
-				<c:url var="linkBorrar" value="/partida/deleteapuntado">
-					<c:param name="idapuntado" value="${lineas.idapuntado }" />
-				</c:url>
-				<c:url var="linkAdd" value="/addapuntado">
-					<c:param name="idpartida" value="${partida.idpartida}" />
-				</c:url>
 				<tr>
-					<td>${lineas.numero}</td>
+					<td>${lineas.orden}</td>
 					<td>${lineas.nombre}</td>
+					<td>${lineas.comentarios}</td>
 					<td>
-						if ${apuntado} = "true" {
-							<form:input size="100" path="comentarios"/>
-						}
-						else {
-							${lineas.comentarios}
-						}
-					</td>
-					<td>
-						if ${apuntado} = "true" {
-							if ${idapuntado} > 0 {
-								<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
-								<a href="${linkBorrar }"
-									onclick="if(!confirm('¿Está seguro?')) return false"
-									class="btn btn-outline-danger btn-sm">Desapuntar
-								</a>
-							}
-							else {
-								<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Apuntar</a>
-							}	
-						}
+						<c:if test="${lineas.esUsuario==true}">
+  							<p style="background-color: green; color: white; text-align:center;">Apuntado</p>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
+		
+		<br/> <br />
 	</div>
+	<form:form action="procesar_apuntados" modelAttribute="form_apuntado" method="post">
+
+			&nbsp;&nbsp;&nbsp;&nbsp;Comentarios:&nbsp; <form:input size="80" path="comentarios"/>
+			<form:errors path="comentarios" cssClass="error" />
+			<c:url var="linkEditar" value="/partida/updateapuntado">
+				<c:param name="idapuntado" value="${form_apuntado.idapuntado}" />
+			</c:url>
+			<c:url var="linkBorrar" value="/partida/deleteapuntado">
+				<c:param name="idapuntado" value="${form_apuntado.idapuntado }" />
+			</c:url>
+			<c:url var="linkAdd" value="/addapuntado">
+				<c:param name="idpartida" value="${form_apuntado.idpartida}" />
+			</c:url>
+			
+			<c:if test="${form_apuntado.idapuntado> 0}">
+				&nbsp;&nbsp;
+				<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
+				&nbsp;&nbsp;&nbsp;
+				<a href="${linkBorrar }"
+					onclick="if(!confirm('¿Está seguro?')) return false"
+					class="btn btn-outline-danger btn-sm">Desapuntar
+				</a>
+			</c:if>
+			<c:if test="${form_apuntado.idapuntado == 0}">
+				<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Añadirse</a>
+			</c:if>
+	</form:form>
+	&nbsp;&nbsp; <a href="cancel">Volver a lista de partidas</a>
 </body>
 </html>

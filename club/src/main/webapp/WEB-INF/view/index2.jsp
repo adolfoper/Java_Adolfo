@@ -71,7 +71,7 @@
 					<c:param name="idpartida" value="${lineas.idpartida }" />
 				</c:url>
 				<c:url var="linkApuntados" value="/apuntado/apuntados">
-					<c:param name="id" value="${lineas.idpartida }" />
+					<c:param name="idpartida" value="${lineas.idpartida }" />
 				</c:url>
 				<tr>
 					<td>${lineas.juego }</td>

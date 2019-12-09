@@ -34,12 +34,12 @@ public class Apuntado {
 	private int idapuntado;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	fetch=FetchType.LAZY)
+	fetch=FetchType.EAGER)
 	@JoinColumn(name="idpartida")
 	private Partida partida;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
-	fetch=FetchType.LAZY)
+	fetch=FetchType.EAGER)
 	@JoinColumn(name="idjugador")
 	private Jugador jugador;
 	

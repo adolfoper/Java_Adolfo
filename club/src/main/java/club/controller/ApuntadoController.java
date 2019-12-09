@@ -28,6 +28,7 @@ import club.model.Apuntado;
 import club.services.IApuntadoService;
 import club.pantalla.Form_partida;
 import club.pantalla.Linea_apuntado;
+import club.pantalla.Form_apuntados;
 
 
 @Controller
@@ -45,7 +46,7 @@ public class ApuntadoController {
 	
 	@GetMapping("/apuntados")
  	public String apuntados(HttpServletRequest request, @RequestParam("idpartida") int idpartida, Model modelo)  {
-		System.out.println("ApuntadoController /apuntado");
+		System.out.println("=>> ApuntadoController /apuntado");
 		
 		String name = request.getUserPrincipal().getName();
 		Jugador perfil = jugadorService.getJugador(name);
@@ -58,29 +59,30 @@ public class ApuntadoController {
 		
 		List<Apuntado> apuntados = apuntadoService.getApuntados();
 		List<Linea_apuntado> lineas = new ArrayList<Linea_apuntado>();
+		
+		Form_apuntados form_apuntado = new Form_apuntados(idpartida);
+		
+		// Numero de linea
 		int contador = 0;
-		boolean perfil_apuntado = false;
 
+		// Carga las lineas de apuntados
 		for (Apuntado apuntado:apuntados) {
 			contador ++;
 			Linea_apuntado linea= new Linea_apuntado();
 			linea.setFromBD(apuntado,perfil,contador);
+			
 			if (linea.getEsUsuario()) {
-				perfil_apuntado = true;
+				form_apuntado.setIdapuntado(linea.getIdapuntado());
+				form_apuntado.setComentarios(linea.getComentarios());
 			}
 			lineas.add(linea);
 		}
 		
-		if (!perfil_apuntado) {
-			contador ++;
-			Linea_apuntado linea= new Linea_apuntado();
-			linea.setVacio(perfil,contador);
-			lineas.add(linea);
-		}
-		
+        System.out.println("** Lineas de apuntados cargadas");
+        System.out.println("Form_apuntado:"+form_apuntado);
+        
 		modelo.addAttribute("lineas", lineas);
-		modelo.addAttribute("apuntado", perfil_apuntado);
-		
+		modelo.addAttribute("form_apuntado", form_apuntado);		
         System.out.println("--> apuntados");
 		return"apuntados";
 	}

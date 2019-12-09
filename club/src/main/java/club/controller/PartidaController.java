@@ -36,7 +36,7 @@ public class PartidaController {
 	@GetMapping("/addpartida")
 //	public String addpartida(HttpServletRequest request, Model modelo) {
  	public String addpartida(Model modelo) {
-		System.out.println("PartidaController /addpartida");
+		System.out.println("=>> PartidaController /addpartida");
 
 		Form_partida form_partida = new Form_partida();
 		modelo.addAttribute("form_partida", form_partida);
@@ -47,7 +47,7 @@ public class PartidaController {
 	
 	@GetMapping("/updatepartida")
 	public String updatepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
-		System.out.println("PartidaController /updatepartida");
+		System.out.println("=>> PartidaController /updatepartida");
 
 		Partida partida = partidaService.getPartida(idpartida);
 		Form_partida form_partida = new Form_partida();
@@ -61,7 +61,7 @@ public class PartidaController {
 	
 	@GetMapping("/deletepartida")
 	public String deletepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
-		System.out.println("PartidaController /deletepartida");
+		System.out.println("=>> PartidaController /deletepartida");
 
 		Partida partida = partidaService.getPartida(idpartida);
 		int idjugador=partida.getJugador().getIdjugador();
@@ -73,6 +73,8 @@ public class PartidaController {
 		
 	@GetMapping("/cancel")
 	public String cancel (HttpServletRequest request, Model modelo) {
+		System.out.println("=>> PartidaController /cancel");
+        System.out.println("--> index2");
         return "redirect:/index2";
 	}
 	
@@ -84,7 +86,7 @@ public class PartidaController {
 //	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
 // 				BindingResult bindingResult) {
 		
-		System.out.println("PartidaController /procesar_alta_partida");
+		System.out.println("=>> PartidaController /procesar_alta_partida");
         
 		form_partida.setMensaje("");
 		if (bindingResult.hasErrors()) { 
@@ -118,7 +120,7 @@ public class PartidaController {
 //	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
 // 				BindingResult bindingResult) {
 		
-		System.out.println("PartidaController /procesar_modif_partida");
+		System.out.println("=>> PartidaController /procesar_modif_partida");
         
 		form_partida.setMensaje("");
 		if (bindingResult.hasErrors()) { 

@@ -36,7 +36,7 @@ public class LoginController {
 	
 	@GetMapping("/index2")
 	public String index2(HttpServletRequest request, Model modelo) {
-		System.out.println("LoginController /index2");
+		System.out.println("=>> LoginController /index2");
 		System.out.println(request.getUserPrincipal().getName());
 			
 		String name = request.getUserPrincipal().getName();
@@ -50,7 +50,7 @@ public class LoginController {
 			linea.setFromBD(partida);
 			lineas.add(linea);
 		}
-        System.out.println("** Lineas cargadas");
+        System.out.println("** Lineas de partida cargadas");
 		
 		modelo.addAttribute("lineas", lineas);
 		System.out.println("lineas:"+lineas);
