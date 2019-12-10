@@ -88,7 +88,9 @@ public class PartidaController {
 		
 		System.out.println("=>> PartidaController /procesar_alta_partida");
         
-		form_partida.setMensaje("");
+		form_partida.setMensaje_horas("");
+		form_partida.setMensaje_plazas("");
+		
 		if (bindingResult.hasErrors()) { 
 			System.out.println("Con errores");
 			return "alta_partida"; 
@@ -122,7 +124,9 @@ public class PartidaController {
 		
 		System.out.println("=>> PartidaController /procesar_modif_partida");
         
-		form_partida.setMensaje("");
+		form_partida.setMensaje_horas("");
+		form_partida.setMensaje_plazas("");
+		
 		if (bindingResult.hasErrors()) { 
 			System.out.println("Con errores");
 			return "modif_partida"; 

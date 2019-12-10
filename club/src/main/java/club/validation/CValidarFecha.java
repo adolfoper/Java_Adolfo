@@ -20,9 +20,13 @@ public class CValidarFecha implements ConstraintValidator<ValidarFecha, String> 
 		
 		Date date = null;
 		boolean valido = true;
+		if (fecha.length()< 10) {
+			fecha = "0"+ fecha;
+		}
 		
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");       
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");    
+            sdf.setLenient(false);
             date = sdf.parse(fecha);
         } 
         catch (ParseException ex) {

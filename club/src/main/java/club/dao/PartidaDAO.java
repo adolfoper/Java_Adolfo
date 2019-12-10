@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import club.model.Apuntado;
 import club.model.Partida;
 
 @Repository
@@ -40,6 +41,14 @@ public class PartidaDAO implements IPartidaDAO {
 		Session miSesion=sessionFactory.getCurrentSession();
 		miSesion.delete(partida);
 
+	}
+	
+	@Override
+	public List<Apuntado> getApuntados(int idpartida) {
+		Session miSesion = sessionFactory.getCurrentSession();
+
+		List<Apuntado> apuntados = miSesion.createQuery("select apun from apuntados where apun.idpartida="+idpartida, Apuntado.class).list();
+		return apuntados;
 	}
 
 }

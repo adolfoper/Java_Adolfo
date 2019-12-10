@@ -3,12 +3,14 @@ package club.pantalla;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import club.model.Partida;
@@ -22,26 +24,22 @@ public class Form_partida {
 	
 	private String creador;
 	
-	@NotNull
+	@NotEmpty(message = "Campo obligatorio")
 	@Size(max = 50,message = "La longitud máxima debe ser 50")
 	private String juego;
 	
 	@Size(max = 100,message = "La longitud máxima debe ser 100")
 	private String comentarios;
 
-	@NotNull
 	@Digits(integer=2,fraction=0,message = "Debe ser numérico de hasta 2 dígitos")
 	private String plazasmax;
 	
-	@NotNull
 	@Digits(integer=2,fraction=0,message = "Debe ser numérico de hasta 2 dígitos")
 	private String plazasmin;
 
-	@NotNull
 	@ValidarFecha
 	private String fechapartida;
 
-	@NotNull
 	@ValidarHora
 	private String horainicio;
 	
@@ -49,7 +47,9 @@ public class Form_partida {
 	@ValidarHora
 	private String horafin;
 	
-	private String mensaje;
+	private String mensaje_horas;
+	
+	private String mensaje_plazas;
 	
 	public Form_partida() {
 		super();
@@ -63,14 +63,25 @@ public class Form_partida {
 	}
 	
 	public boolean validar() {
+			
+		boolean valido = true;
+		
+		this.mensaje_horas = "";
+		this.mensaje_plazas = "";
+		
         System.out.println("** Validando intervalo de horas");
         Time time = Time.valueOf(this.horainicio+":00");
         if (time.compareTo(Time.valueOf(this.horafin+":00"))>=0){
-        	this.mensaje = "Intervalo de horas no válido";
-			return false;
+        	this.mensaje_horas = "Intervalo de horas no válido. ";
+			valido = false;
         }
-		else
-			return true;
+		
+        if (Integer.valueOf(this.plazasmin) > Integer.valueOf(this.plazasmax)) {
+        	this.mensaje_plazas = "Intervalo de plazas no válido. ";
+			valido = false;
+        }
+        
+        return valido;
 	}
 	
 	// Convertir valores a formato BD
@@ -78,20 +89,27 @@ public class Form_partida {
 		
 		Partida partida = new Partida();
         System.out.println("** getToBD");
-		
-        partida.setIdpartida(this.idpartida);
-		partida.setJugador(jugador);
-		partida.setJuego(this.juego);
-		partida.setComentarios(this.comentarios);
-		partida.setPlazasmin(Integer.valueOf(this.plazasmin));
-		partida.setPlazasmax(Integer.valueOf(this.plazasmax));
+          	partida.setIdpartida(this.idpartida);
+        	partida.setJugador(jugador);
+			partida.setJuego(this.juego);
+		  	partida.setComentarios(this.comentarios);
+		  	partida.setPlazasmin(Integer.valueOf(this.plazasmin));
+			partida.setPlazasmax(Integer.valueOf(this.plazasmax));
 		
 		String fecha = this.fechapartida.substring(6, 10) +
 						this.fechapartida.substring(2, 6) +
 						this.fechapartida.substring(0, 2);
-		fecha.replace('/', '-');
+		//fecha.replace('/', '-');
 		
-		partida.setFechapartida(Date.valueOf(fecha));
+		//partida.setFechapartida(Date.valueOf(fecha));
+		try {
+			java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+			partida.setFechapartida (new java.sql.Date(date1.getTime()));
+		}
+		catch (ParseException ex) {
+            // Excepción ya contemplada en la validación de fecha
+        }
+		
 		partida.setHorainicio(Time.valueOf(this.horainicio+":00"));
 		partida.setHorafin(Time.valueOf(this.horafin+":00"));
 		return partida;
@@ -114,7 +132,8 @@ public class Form_partida {
 		DateFormat hora = new SimpleDateFormat("HH:mm");
 		this.horainicio = hora.format(partida.getHorainicio());		
 		this.horafin = hora.format(partida.getHorafin());
-		this.mensaje = "";
+		this.mensaje_horas = "";
+		this.mensaje_plazas = "";
 	}
 
 	public String getCreador() {
@@ -188,11 +207,18 @@ public class Form_partida {
 	public void setPlazasmin(String plazasmin) {
 		this.plazasmin = plazasmin;
 	}
-	public String getMensaje() {
-		return mensaje;
+	public String getMensaje_horas() {
+		return mensaje_horas;
 	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
+	public void setMensaje_horas(String mensaje) {
+		this.mensaje_horas = mensaje;
+	}
+	
+	public String getMensaje_plazas() {
+		return mensaje_plazas;
+	}
+	public void setMensaje_plazas(String mensaje) {
+		this.mensaje_plazas = mensaje;
 	}
 	
 }

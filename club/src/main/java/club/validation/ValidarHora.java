@@ -7,12 +7,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = CValidarFecha.class)
+@Constraint(validatedBy = CValidarHora.class)
 @Target({ ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface ValidarHora {
-	String message() default"La hora ha de ser en foermato HH:MM";
+	String message() default"La hora ha de ser en formato HH:MM";
 	Class<?>[] groups() default{};
 	Class<? extends Payload>[] payload() default{};
 }

@@ -2,6 +2,7 @@ package club.dao;
 
 import java.util.List;
 
+import club.model.Apuntado;
 import club.model.Partida;
 
 public interface IPartidaDAO {
@@ -13,4 +14,6 @@ public interface IPartidaDAO {
 	void save(Partida partida);
 
 	void delete(Partida partida);
+	
+	public List<Apuntado> getApuntados(int idpartida);
 }

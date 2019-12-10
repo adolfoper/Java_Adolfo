@@ -60,7 +60,7 @@ public class ApuntadoController {
 		List<Apuntado> apuntados = apuntadoService.getApuntados();
 		List<Linea_apuntado> lineas = new ArrayList<Linea_apuntado>();
 		
-		Form_apuntados form_apuntado = new Form_apuntados(idpartida);
+		Form_apuntados form_apuntado = new Form_apuntados(idpartida, perfil.getIdjugador());
 		
 		// Numero de linea
 		int contador = 0;
@@ -87,4 +87,44 @@ public class ApuntadoController {
 		return"apuntados";
 	}
 	
+	@GetMapping("/updateapuntado")
+	public String alta_apuntado(HttpServletRequest request, 
+			@RequestParam("idapuntado") int idapuntado, 
+			@RequestParam("comentarios") String comentarios, 
+			Model modelo)  {
+	//public String procesar_alta_apuntado(HttpServletRequest request, 
+	//			@Valid @ModelAttribute("form_apuntado") Form_apuntados form_apuntado, 
+	//			BindingResult bindingResult) { 
+		
+		System.out.println("=>> ApuntadoController /addapuntado");
+		
+		System.out.println("idapuntado: "+idapuntado);
+		System.out.println("comentarios: "+comentarios);
+		Apuntado apuntado = apuntadoService.getApuntado(idapuntado);
+		System.out.println("apuntado: "+apuntado);
+        
+        Jugador jugador = jugadorService.getJugador(apuntado.getJugador().getIdjugador());
+        System.out.println("jugador: "+jugador);
+		Partida partida = partidaService.getPartida(apuntado.getPartida().getIdpartida());
+		System.out.println("partida: "+partida);
+		
+		apuntadoService.save(apuntado);
+	    System.out.println("** Apuntado grabado");
+	    modelo.addAttribute("idpartida", partida.getIdpartida());
+	    System.out.println("--> apuntados");
+	    return "redirect:/apuntado/apuntados";
+	}
+	
+
+	@PostMapping("/procesar_apuntados")
+	public String procesar(HttpServletRequest request, 
+			@Valid @ModelAttribute("form_apuntado") Form_apuntados form_apuntado, 
+			BindingResult bindingResult) { 
+		
+		System.out.println("=>> ApuntadoController /procesar_apuntados");
+		
+		System.out.println("form_apuntado: "+form_apuntado);
+		
+	    return "redirect:/apuntado/apuntados";
+	}
 }

@@ -72,33 +72,41 @@
 		
 		<br/> <br />
 	</div>
+	
 	<form:form action="procesar_apuntados" modelAttribute="form_apuntado" method="post">
 
 			&nbsp;&nbsp;&nbsp;&nbsp;Comentarios:&nbsp; <form:input size="80" path="comentarios"/>
 			<form:errors path="comentarios" cssClass="error" />
-			<c:url var="linkEditar" value="/partida/updateapuntado">
-				<c:param name="idapuntado" value="${form_apuntado.idapuntado}" />
-			</c:url>
-			<c:url var="linkBorrar" value="/partida/deleteapuntado">
-				<c:param name="idapuntado" value="${form_apuntado.idapuntado }" />
-			</c:url>
-			<c:url var="linkAdd" value="/addapuntado">
-				<c:param name="idpartida" value="${form_apuntado.idpartida}" />
-			</c:url>
-			
-			<c:if test="${form_apuntado.idapuntado> 0}">
-				&nbsp;&nbsp;
-				<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
-				&nbsp;&nbsp;&nbsp;
-				<a href="${linkBorrar }"
-					onclick="if(!confirm('¿Está seguro?')) return false"
-					class="btn btn-outline-danger btn-sm">Desapuntar
-				</a>
-			</c:if>
-			<c:if test="${form_apuntado.idapuntado == 0}">
-				<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Añadirse</a>
-			</c:if>
+			<br/>
+	   		<button type="submit" name="Alta" value="Alta">Alta</button>
+			<br />
 	</form:form>
+	
+	<c:url var="linkEditar" value="/apuntado/updateapuntado">
+			<c:param name="idapuntado" value="${form_apuntado.idapuntado}" />
+			<c:param name="comentarios" value="${form_apuntado.comentarios}" />
+	</c:url>
+	<c:url var="linkBorrar" value="/apuntado/deleteapuntado">
+			<c:param name="idapuntado" value="${form_apuntado.idapuntado }" />
+	</c:url>
+	<c:url var="linkAdd" value="/apuntado/addapuntado">
+			<c:param name="idpartida" value="${form_apuntado.idpartida}" />
+	</c:url>
+			
+	<c:if test="${form_apuntado.idapuntado> 0}">
+		&nbsp;&nbsp;
+		<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
+		&nbsp;&nbsp;&nbsp;
+		<a href="${linkBorrar }"
+			onclick="if(!confirm('¿Está seguro?')) return false"
+			class="btn btn-outline-danger btn-sm">Desapuntar
+		</a>
+	</c:if>
+	<c:if test="${form_apuntado.idapuntado == 0}">
+		<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Añadirse</a>
+	</c:if>
+	&nbsp;&nbsp;&nbsp;&nbsp;${form_apuntado.mensaje}
+	<br>
 	&nbsp;&nbsp; <a href="cancel">Volver a lista de partidas</a>
 </body>
 </html>

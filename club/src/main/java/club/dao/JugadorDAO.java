@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import club.model.Jugador;
+import club.model.Apuntado;
 
 @Repository
 public class JugadorDAO implements IJugadorDAO {
@@ -57,6 +58,14 @@ public class JugadorDAO implements IJugadorDAO {
 
 		List<Jugador> jugadores = miSesion.createQuery("from Jugador", Jugador.class).list();
 		return jugadores;
+	}
+	
+	@Override
+	public List<Apuntado> getApuntados(int idjugador) {
+		Session miSesion = sessionFactory.getCurrentSession();
+
+		List<Apuntado> apuntados = miSesion.createQuery("select apun from apuntados where apun.idjugador="+idjugador, Apuntado.class).list();
+		return apuntados;
 	}
 
 	@Override
