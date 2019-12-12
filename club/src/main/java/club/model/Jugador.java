@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.JoinTable;
 
 import club.model.Partida;
 
@@ -29,7 +30,7 @@ public class Jugador {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idjugador;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EARN)
     @JoinColumn(name = "username")
 	private User user;
 
@@ -75,25 +76,19 @@ public class Jugador {
 		return partidas;
 	}
 	
-	
 	// Relacion con apuntado
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	//private List<Apuntado> apuntados;
 	private Set<Apuntado> apuntados = new HashSet<>();
-	
+		
 	public void addApuntado(Apuntado apuntado) {
 		if (apuntados==null) {
 			apuntados=new HashSet<Apuntado>();
-			//apuntados=new ArrayList<Apuntado>();
 		}
 		apuntados.add(apuntado);
 		apuntado.setJugador(this);
 	}
-	
-	//public List<Apuntado> getApuntados() {
-	//	return apuntados;
-	//}
 	
 	public Set<Apuntado> getApuntados() {
 		return apuntados;
@@ -133,11 +128,9 @@ public class Jugador {
 		this.idjugador = idjugador;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
-
 
 	public void setUsername(User user) {
 		this.user = user;
@@ -201,6 +194,18 @@ public class Jugador {
 
 	public void setFechaalta(Date fechaalta) {
 		this.fechaalta = fechaalta;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setPartidas(Set<Partida> partidas) {
+		this.partidas = partidas;
+	}
+
+	public void setApuntados(Set<Apuntado> apuntados) {
+		this.apuntados = apuntados;
 	}
 
 

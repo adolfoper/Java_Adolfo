@@ -28,7 +28,9 @@ public class LoginController {
 	private IPartidaService partidaService;
 	
 	@GetMapping("/formlogin")
-	public String formLogin() {
+	public String formLogin(){ 
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("LoginController /formlogin");
         System.out.println("--> login");
 		return"login";
@@ -36,6 +38,8 @@ public class LoginController {
 	
 	@GetMapping("/index2")
 	public String index2(HttpServletRequest request, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> LoginController /index2");
 		System.out.println(request.getUserPrincipal().getName());
 			

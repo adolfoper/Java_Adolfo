@@ -74,4 +74,10 @@ public class Linea_apuntado {
 		this.orden = orden;
 	}
 
+	@Override
+	public String toString() {
+		return "Linea_apuntado [idapuntado=" + idapuntado + ", orden=" + orden + ", nombre=" + nombre + ", comentarios="
+				+ comentarios + ", esUsuario=" + esUsuario + "]";
+	}
+
 }

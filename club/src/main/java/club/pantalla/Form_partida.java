@@ -220,5 +220,13 @@ public class Form_partida {
 	public void setMensaje_plazas(String mensaje) {
 		this.mensaje_plazas = mensaje;
 	}
+
+	@Override
+	public String toString() {
+		return "Form_partida [idpartida=" + idpartida + ", creador=" + creador + ", juego=" + juego + ", comentarios="
+				+ comentarios + ", plazasmax=" + plazasmax + ", plazasmin=" + plazasmin + ", fechapartida="
+				+ fechapartida + ", horainicio=" + horainicio + ", horafin=" + horafin + ", mensaje_horas="
+				+ mensaje_horas + ", mensaje_plazas=" + mensaje_plazas + "]";
+	}
 	
 }

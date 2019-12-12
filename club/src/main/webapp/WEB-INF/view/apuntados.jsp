@@ -35,7 +35,7 @@
 				<sec:authentication property="principal.username" />
 				<form:form action="${pageContext.request.contextPath}/logout"
 					method="POST">
-					<button type="submit" class="btn btn-warning">Salir</button>
+					<button type="submit" class="btn btn-primary mb-1">Salir</button>
 				</form:form>
 			</div>
 			<div>
@@ -75,38 +75,33 @@
 	
 	<form:form action="procesar_apuntados" modelAttribute="form_apuntado" method="post">
 
+			<form:input type="hidden" size="80" path="idpartida"/>
+			<form:input type="hidden" size="80" path="idapuntado"/>
+			
 			&nbsp;&nbsp;&nbsp;&nbsp;Comentarios:&nbsp; <form:input size="80" path="comentarios"/>
 			<form:errors path="comentarios" cssClass="error" />
 			<br/>
-	   		<button type="submit" name="Alta" value="Alta">Alta</button>
-			<br />
+			<br/>
+		
+			<param name="comentarios" value="${form_apuntado.comentarios}" >
+			<param name="idapuntado" value="${form_apuntado.idapuntado}" /> 
+			<param name="idpartida" value="${form_apuntado.idpartida}" /> 
+			
+			<c:if test="${form_apuntado.idapuntado> 0}">
+				&nbsp;&nbsp;
+				<button type="submit" class="btn btn-primary mb-1" name="accion" value="Actualizar">Actualizar</button>
+				&nbsp;&nbsp;&nbsp;
+				<button type="submit" class="btn btn-primary mb-1" name="accion" value="Desapuntar">Desapuntar</button>
+			</c:if>
+			<c:if test="${form_apuntado.idapuntado == 0}">
+				&nbsp;&nbsp;
+				<button type="submit" class="btn btn-primary mb-1" name="accion" value="Apuntar">Apuntarse</button>
+			</c:if>
+			<br />	
+			&nbsp;&nbsp;&nbsp;&nbsp;${form_apuntado.mensaje}
+			<br>
+			&nbsp;&nbsp; <a href="cancel">Volver a lista de partidas</a>	
 	</form:form>
 	
-	<c:url var="linkEditar" value="/apuntado/updateapuntado">
-			<c:param name="idapuntado" value="${form_apuntado.idapuntado}" />
-			<c:param name="comentarios" value="${form_apuntado.comentarios}" />
-	</c:url>
-	<c:url var="linkBorrar" value="/apuntado/deleteapuntado">
-			<c:param name="idapuntado" value="${form_apuntado.idapuntado }" />
-	</c:url>
-	<c:url var="linkAdd" value="/apuntado/addapuntado">
-			<c:param name="idpartida" value="${form_apuntado.idpartida}" />
-	</c:url>
-			
-	<c:if test="${form_apuntado.idapuntado> 0}">
-		&nbsp;&nbsp;
-		<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Actualizar</a>
-		&nbsp;&nbsp;&nbsp;
-		<a href="${linkBorrar }"
-			onclick="if(!confirm('¿Está seguro?')) return false"
-			class="btn btn-outline-danger btn-sm">Desapuntar
-		</a>
-	</c:if>
-	<c:if test="${form_apuntado.idapuntado == 0}">
-		<a href="${linkAdd }" class="btn btn-outline-success btn-sm">Añadirse</a>
-	</c:if>
-	&nbsp;&nbsp;&nbsp;&nbsp;${form_apuntado.mensaje}
-	<br>
-	&nbsp;&nbsp; <a href="cancel">Volver a lista de partidas</a>
 </body>
 </html>

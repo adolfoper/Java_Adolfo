@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AppController {
 
 	@GetMapping("/")
-	public String inicio(Model modelo) {	
+	public String inicio(Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> AppController /");
 		System.out.println("--> index");
 		return "index";
@@ -16,6 +18,8 @@ public class AppController {
 	
 	@GetMapping("/index")
 	public String retorno(Model modelo) {	
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> AppController /index");
 		System.out.println("--> index");
 		return "index";

@@ -26,7 +26,7 @@
 			<sec:authentication property="principal.username" />
 			<form:form action="${pageContext.request.contextPath}/logout"
 				method="POST">
-				<button type="submit" class="btn btn-warning">Salir</button>
+				<button type="submit" class="btn btn-primary mb-1">Salir</button>
 			</form:form>
 		</div>
 		<div>

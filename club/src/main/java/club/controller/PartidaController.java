@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -19,9 +21,15 @@ import javax.validation.Valid;
 
 import club.model.Jugador;
 import club.services.IJugadorService;
+
 import club.model.Partida;
 import club.services.IPartidaService;
+
+import club.model.Apuntado;
+import club.services.IApuntadoService;
+
 import club.pantalla.Form_partida;
+
 
 @Controller
 @RequestMapping("/partida")
@@ -33,9 +41,14 @@ public class PartidaController {
 	@Autowired
 	private IPartidaService partidaService;
 	
+	@Autowired
+	private IApuntadoService apuntadoService;
+	
 	@GetMapping("/addpartida")
 //	public String addpartida(HttpServletRequest request, Model modelo) {
  	public String addpartida(Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /addpartida");
 
 		Form_partida form_partida = new Form_partida();
@@ -47,6 +60,8 @@ public class PartidaController {
 	
 	@GetMapping("/updatepartida")
 	public String updatepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /updatepartida");
 
 		Partida partida = partidaService.getPartida(idpartida);
@@ -61,10 +76,19 @@ public class PartidaController {
 	
 	@GetMapping("/deletepartida")
 	public String deletepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /deletepartida");
 
 		Partida partida = partidaService.getPartida(idpartida);
+		
 		int idjugador=partida.getJugador().getIdjugador();
+		
+		List<Apuntado> apuntados = partida.getApuntados();
+		for (Apuntado apuntado:apuntados) {
+			apuntadoService.delete(apuntado);
+		}
+		
 		partidaService.delete(partida);
 		
         System.out.println("--> index2");
@@ -73,6 +97,8 @@ public class PartidaController {
 		
 	@GetMapping("/cancel")
 	public String cancel (HttpServletRequest request, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /cancel");
         System.out.println("--> index2");
         return "redirect:/index2";
@@ -110,6 +136,14 @@ public class PartidaController {
 	        System.out.println("** Partida convertida:"+partida);
 			partidaService.save(partida);	
 	        System.out.println("** Partida grabada");
+	        
+	        Apuntado apuntado = new Apuntado();
+	        apuntado.setComentarios("Creador de la partida");
+			apuntado.setPartida(partida);
+			apuntado.setJugador(perfil);
+			apuntadoService.save(apuntado);
+			
+			 System.out.println("** Apuntado");
 	        System.out.println("--> index2");
 	        return "redirect:/index2";
 		}
@@ -122,6 +156,8 @@ public class PartidaController {
 //	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
 // 				BindingResult bindingResult) {
 		
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /procesar_modif_partida");
         
 		form_partida.setMensaje_horas("");

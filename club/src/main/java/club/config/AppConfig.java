@@ -26,6 +26,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import club.model.Authorities;
 import club.model.Jugador;
@@ -38,6 +40,7 @@ import club.model.User;
 @ComponentScan(basePackages="club")
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
+//public class AppConfig implements WebMvcConfigurer{
 public class AppConfig {
 
 	@Autowired
@@ -89,4 +92,9 @@ public class AppConfig {
 		transactionManager.setSessionFactory(getSessionFactory().getObject());
 		return transactionManager;
 	}
+	
+	//XBean
+	//public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    //    registry.addResourceHandler("/images/**").addResourceLocations("/images/");
+    //}
 }

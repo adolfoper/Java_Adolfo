@@ -38,64 +38,44 @@
 					method="POST">
 					<button type="submit" class="btn btn-primary mb-1">Salir</button>
 				</form:form>
-				<sec:authorize access="hasRole('ADMINISTRADOR')">
-					<br>
-					<a href="${pageContext.request.contextPath}/jugador/index_usuarios"
-					class="btn btn-warning">Mantenimiento Usuarios</a>
-				</sec:authorize>
 			</div>
 			<div>
-				<h1>Partidas abiertas</h1>
+				<h1>Usuarios registrados</h1>
 			</div>
 		</div>
 		
 		<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
 			<a href="${pageContext.request.contextPath}/partida/addpartida"
-				class="btn btn-primary mb-1">Crear partida</a>
+				class="btn btn-primary mb-1">Alta usuario</a>
 		</sec:authorize>
 
 		<table class="table table-striped">
 			<tr>
-				<th>Juego</th>
-				<th>Creador</th>
-				<th>Fecha partida</th>
-				<th>Hora inicio</th>
-				<th>Hota fin</th>	
-				<th>Plazas</th>		
-				<th>Jugadores apuntados</th>
-				<th>Comentarios</th>
-				<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-					<th>Acciones</th>
-				</sec:authorize>
+				<th>Usuario</th>
+				<th>Num. Socio</th>
+				<th>Nombre</th>
+				<th>Nivel</th>
+				<th>Acciones</th>
 			</tr>
 
 			<c:forEach var="lineas" items="${lineas}">
-				<c:url var="linkEditar" value="/partida/updatepartida">
-					<c:param name="idpartida" value="${lineas.idpartida }" />
+				<c:url var="linkEditar" value="/jugadores/updatejugador">
+					<c:param name="username" value="${lineas.username }" />
 				</c:url>
-				<c:url var="linkBorrar" value="/partida/deletepartida">
-					<c:param name="idpartida" value="${lineas.idpartida }" />
-				</c:url>
-				<c:url var="linkApuntados" value="/apuntado/apuntados">
-					<c:param name="idpartida" value="${lineas.idpartida }" />
+				<c:url var="linkBorrar" value="/jugadores/deletejugador">
+					<c:param name="username" value="${lineas.username }" />
 				</c:url>
 				<tr>
-					<td>${lineas.juego }</td>
-					<td>${lineas.creador }</td>
-					<td>${lineas.fechapartida }</td>
-					<td>${lineas.horainicio }</td>
-					<td>${lineas.horafin }</td>
-					<td>${lineas.plazas }</td>
-					<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="${linkApuntados }">${lineas.numApuntados}</a></td>
-					<td>${lineas.comentarios }</td>
-					<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-						<td>
-							<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Editar</a>						
-							<a href="${linkBorrar }"
-								onclick="if(!confirm('¿Está seguro?')) return false"
-								class="btn btn-outline-danger btn-sm">Borrar</a>
-						</td>
-					</sec:authorize>
+					<td>${lineas.username }</td>
+					<td>${lineas.numsocio }</td>
+					<td>${lineas.nombre }</td>
+					<td>${lineas.tipo }</td>
+					<td>
+						<a href="${linkEditar }" class="btn btn-outline-success btn-sm">Editar</a>
+						<a href="${linkBorrar }"
+							onclick="if(!confirm('¿Está seguro?')) return false"
+							class="btn btn-outline-danger btn-sm">Borrar</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
