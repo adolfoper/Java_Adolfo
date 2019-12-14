@@ -35,26 +35,19 @@ public class Linea_jugador {
 	public void setFromBD(Jugador jugador) {
 			System.out.println("** setfromBD");
 		this.username = jugador.getUser().getUsername();
-			System.out.println("** 01");
 		this.numsocio = Integer.toString(jugador.getNumsocio());
-			System.out.println("** 02");
 		this.nombre = jugador.getNombre();
-			System.out.println("** 03");
-			System.out.println("** 04");
+		
+		User user1 = jugador.getUser();
+		//System.out.println("user:"+user1);
 			
-			User user1 = jugador.getUser();
-			System.out.println("user:"+user1);
-			
-			Set authorities = user1.getAuthorities();
-			System.out.println("authorities:"+authorities);
+		Set authorities = user1.getAuthorities();
+		System.out.println("authorities:"+authorities);
 			
 		authorities = jugador.getUser().getAuthorities();
-			System.out.println("** 05");
 		Iterator iterator = authorities.iterator();
-			System.out.println("** 06");
 		Authorities authority = (Authorities) iterator.next();
-			System.out.println("** 07");
-		this.tipo = authority.getAuthority().substring(6);	
+		this.tipo = authority.getAuthority().substring(5);	
 		System.out.println("** salir");
 	}
 	

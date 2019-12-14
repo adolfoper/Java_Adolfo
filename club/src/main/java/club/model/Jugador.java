@@ -30,7 +30,7 @@ public class Jugador {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idjugador;
 	
-	@OneToOne(fetch = FetchType.EARN)
+	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
 	private User user;
 

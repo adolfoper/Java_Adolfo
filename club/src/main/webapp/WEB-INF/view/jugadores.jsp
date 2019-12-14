@@ -45,7 +45,7 @@
 		</div>
 		
 		<sec:authorize access="hasAnyRole('SOCIO','ADMINISTRADOR')">
-			<a href="${pageContext.request.contextPath}/partida/addpartida"
+			<a href="${pageContext.request.contextPath}/jugador/addjugador"
 				class="btn btn-primary mb-1">Alta usuario</a>
 		</sec:authorize>
 
@@ -80,6 +80,7 @@
 			</c:forEach>
 		</table>
 	</div>
+	&nbsp;&nbsp; <a href="cancel">Volver a lista de partidas</a>
 </body>
 
 </html>

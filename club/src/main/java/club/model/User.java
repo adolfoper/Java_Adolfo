@@ -26,12 +26,12 @@ public class User {
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
   private Set<Authorities> authorities = new HashSet<>();
   
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "username")
-  private User user;
+  //@OneToOne(fetch = FetchType.LAZY)
+  //@JoinColumn(name = "username")
+  //private Jugador jugador;
 
   public String getUsername() {
     return username;
@@ -65,11 +65,11 @@ public class User {
     this.authorities = authorities;
   }
 
-public User getUser() {
-	return user;
-}
+//public Jugador getJugador() {
+//	return this.jugador;
+//}
 
-public void setUser(User user) {
-	this.user = user;
-}
+//public void setJugador(Jugador user) {
+//	this.jugador = jugador;
+//}
 }

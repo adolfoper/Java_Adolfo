@@ -40,7 +40,7 @@
 				</form:form>
 				<sec:authorize access="hasRole('ADMINISTRADOR')">
 					<br>
-					<a href="${pageContext.request.contextPath}/jugador/index_usuarios"
+					<a href="${pageContext.request.contextPath}/jugador/index_jugadores"
 					class="btn btn-warning">Mantenimiento Usuarios</a>
 				</sec:authorize>
 			</div>
