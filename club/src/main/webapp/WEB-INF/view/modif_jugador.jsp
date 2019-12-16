@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Alta de jugador</title>
+<title>Modificación de jugador</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -30,15 +30,15 @@
 			</form:form>
 		</div>
 		<div>
-			<h1>Alta de jugador</h1>
+			<h1>Modificación de jugador</h1>
 		</div>
 	</div>
 </div>
 <br />
 
-<form:form action="procesar_alta_jugador" modelAttribute="form_jugador" method="post">
+<form:form action="procesar_modif_jugador" modelAttribute="form_jugador" method="post">
 	
-	<form:hidden path="idjugador" value="0"/>
+	<form:hidden path="idjugador"/>
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;Usuario:&nbsp; <form:input size="50" path="username" />*
 		<form:errors path="username" cssClass="error" />
@@ -73,7 +73,7 @@
 		items="${form_jugador.listaTipos}" delimiter="&nbsp;&nbsp;&nbsp;"/>
 	<br /><br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary mb-1" type="submit" name="Alta" value="Alta" >Alta</button>
+	&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary mb-1" type="submit" name="Modificar" value="Modificar" >Modificar</button>
 	&nbsp;&nbsp;&nbsp;&nbsp; <a href="cancel2">Volver a lista de jugadores</a>
 	<br/>
 </form:form>

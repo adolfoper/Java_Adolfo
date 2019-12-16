@@ -12,6 +12,9 @@ import club.model.User;
 @Table(name = "authorities")
 public class Authorities {
   @Id
+  @Column(name = "idauthorities2")
+  private int idauthorities;
+  
   @Column(name = "authority")
   private String authority;
 
@@ -19,6 +22,10 @@ public class Authorities {
   @JoinColumn(name = "username")
   private User user;
 
+  //@Id
+  //@Column(name = "idauthorities2")
+  //private String idauthorities2;
+  
   public String getAuthority() {
     return authority;
   }
@@ -34,5 +41,13 @@ public class Authorities {
   public void setUser(User user) {
     this.user = user;
   }
+
+public int getIdauthorities() {
+	return idauthorities;
+}
+
+public void setIdauthorities(int idauthorities) {
+	this.idauthorities = idauthorities;
+}
 
 }

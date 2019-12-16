@@ -31,7 +31,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="float-right">
-				Usuario:
+				<b>Usuario:</b>
 				<sec:authentication property="principal.username" />
 				<br>
 				<form:form action="${pageContext.request.contextPath}/logout"

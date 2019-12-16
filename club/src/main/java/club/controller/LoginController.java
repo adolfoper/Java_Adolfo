@@ -31,7 +31,7 @@ public class LoginController {
 	public String formLogin(){ 
 		System.out.println(" ");
 		System.out.println(" ");
-		System.out.println("LoginController /formlogin");
+		System.out.println("==>> LoginController /formlogin");
         System.out.println("--> login");
 		return"login";
 	}

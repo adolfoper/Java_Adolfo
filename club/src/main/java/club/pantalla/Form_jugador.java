@@ -30,10 +30,23 @@ import club.model.Authorities;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 public class Form_jugador {
 	
 	private int idjugador;
+	
+	private int idauthorities;
 			
+	public int getIdauthorities() {
+		return idauthorities;
+	}
+
+	public void setIdauthorities(int idauthorities) {
+		this.idauthorities = idauthorities;
+	}
+
 	@NotEmpty(message = "Campo obligatorio")
 	@Size(max = 50,message = "La longitud máxima debe ser 50")
 	private String username;
@@ -73,17 +86,18 @@ public class Form_jugador {
 
 	public Form_jugador() {
 		super();
-		 System.out.println("** Creando form_partida");
+		 System.out.println("** Creando form_jugador");
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		System.out.println(date.format(formatter));
 		this.fechaalta = date.format(formatter);
+		this.numsocio = "0";
 		this.mensaje="";
 		
 		listaTipos=new LinkedHashMap<String,String>();
-		listaTipos.put("ADMINISTRADOR","ROLE_ADMINISTRADOR");
-		listaTipos.put("SOCIO","ROLE_SOCIO");
-		listaTipos.put("COLABORADOR","ROLE_COLABORADOR");
+		listaTipos.put("ROLE_ADMINISTRADOR","Administrador");
+		listaTipos.put("ROLE_SOCIO","Socio");
+		listaTipos.put("ROLE_COLABORADOR","Colaborador");
 	}
 	
 	public int getIdjugador() {
@@ -102,13 +116,16 @@ public class Form_jugador {
 		
         System.out.println("** getToBD_User");
 		User user = new User();
-        //user.setUsername(this.username);
+        user.setUsername(this.username);
         
-        //if (reset_pass = true){
-        //	 user.setPassword("$2y$12$f0OvHgs0uSfwonMJsX0Geum7MNr1ouzMXAfttN7C5xzPoqh/kIhpK");
-        //}
+        String encoded = new BCryptPasswordEncoder().encode("1234");
+        System.out.println("encoded:"+encoded);
+        
+        if (reset_pass = true){
+        	 user.setPassword(encoded);
+        }
 
-        //user.setEnabled(enabled);
+        user.setEnabled(enabled);
         return user;
 	}
 	
@@ -116,6 +133,8 @@ public class Form_jugador {
 		Authorities authorities = new Authorities();
         System.out.println("** getToBD_Authorities");
         authorities.setUser(user);
+        System.out.println("** cargado user:"+authorities.getUser());
+        System.out.println("** tipo:"+tipo);
         authorities.setAuthority(this.tipo);
         return authorities;
 	}
@@ -149,12 +168,18 @@ public class Form_jugador {
 	
 	public void setFromBD(Jugador jugador) {
 		System.out.println("** setFromBD");
+		this.idjugador = jugador.getIdjugador();
 		this.username = jugador.getUser().getUsername();
 		this.numsocio = Integer.toString(jugador.getNumsocio());
 		this.nombre = jugador.getNombre();
+		this.telefono = Long.toString(jugador.getTelefono());
+		this.direccion1 = jugador.getDireccion1();
+		this.direccion2 = jugador.getDireccion2();
+		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
+		this.fechaalta = fecha.format(jugador.getFechaalta());
 		
 		User user1 = jugador.getUser();
-		//System.out.println("user:"+user1);
+		System.out.println("user:"+user1);
 			
 		Set authorities = user1.getAuthorities();
 		System.out.println("authorities:"+authorities);
@@ -162,24 +187,32 @@ public class Form_jugador {
 		authorities = jugador.getUser().getAuthorities();
 		Iterator iterator = authorities.iterator();
 		Authorities authority = (Authorities) iterator.next();
-		this.tipo = authority.getAuthority().substring(5);	
-		System.out.println("** salir");
-		/*
-		this.username = user.getUsername();	
-		this.creador = partida.getJugador().getNombre();	
-		this.juego = partida.getJuego();
-		this.comentarios = partida.getComentarios();		
-		this.plazasmin = Integer.toString(partida.getPlazasmin()); 		
-		this.plazasmax = Integer.toString(partida.getPlazasmax());
-		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
-		this.fechapartida = fecha.format(partida.getFechapartida());
-
-		DateFormat hora = new SimpleDateFormat("HH:mm");
-		this.horainicio = hora.format(partida.getHorainicio());		
-		this.horafin = hora.format(partida.getHorafin());
-		this.mensaje_horas = "";
-		this.mensaje_plazas = "";
-		*/
+		// this.tipo = authority.getAuthority().substring(5);
+		this.tipo = authority.getAuthority();
+		this.idauthorities = authority.getIdauthorities();
+	}
+	
+	public boolean valida() {
+		System.out.println("** valida");
+		
+		this.mensaje="";
+		
+		if (this.tipo==null) { 
+			this.mensaje = "Debe seleccionar un perfil de jugador";
+			return false;
+		}
+		
+		if (!this.tipo.equals("ROLE_COLABORADOR") && Integer.valueOf(this.numsocio) == 0) { 
+			this.mensaje = "Socios y administradores deben tener número de socio informado";
+			return false;
+		}
+		
+		if (this.tipo.equals("ROLE_COLABORADOR") && Integer.valueOf(this.numsocio) != 0) { 
+			this.mensaje = "Los colaboradores deben tener el numero de socio a cero";
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public Map<String, String> getListaTipos() {
@@ -252,7 +285,7 @@ public class Form_jugador {
 
 	@Override
 	public String toString() {
-		return "Form_jugador [idjugador=" + idjugador + ",username=" + username + ", tipo=" + tipo + ", nombre="
+		return "Form_jugador [idjugador=" + idjugador + ", username=" + username + ", tipo=" + tipo + ", nombre="
 				+ nombre + ", direccion1=" + direccion1 + ", direccion2=" + direccion2 + ", telefono=" + telefono
 				+ ", numsocio=" + numsocio + ", fechaalta=" + fechaalta + "]";
 	}

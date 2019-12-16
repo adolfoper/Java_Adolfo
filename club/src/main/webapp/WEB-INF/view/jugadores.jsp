@@ -31,7 +31,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="float-right">
-				Usuario:
+				<b>Usuario:</b>
 				<sec:authentication property="principal.username" />
 				<br>
 				<form:form action="${pageContext.request.contextPath}/logout"
@@ -59,11 +59,11 @@
 			</tr>
 
 			<c:forEach var="lineas" items="${lineas}">
-				<c:url var="linkEditar" value="/jugadores/updatejugador">
-					<c:param name="username" value="${lineas.username }" />
+				<c:url var="linkEditar" value="/jugador/updatejugador">
+					<c:param name="idjugador" value="${lineas.idjugador }" />
 				</c:url>
-				<c:url var="linkBorrar" value="/jugadores/deletejugador">
-					<c:param name="username" value="${lineas.username }" />
+				<c:url var="linkBorrar" value="/jugador/deletejugador">
+					<c:param name="idjugador" value="${lineas.idjugador }" />
 				</c:url>
 				<tr>
 					<td>${lineas.username }</td>

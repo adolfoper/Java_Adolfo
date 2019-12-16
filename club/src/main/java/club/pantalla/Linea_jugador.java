@@ -23,7 +23,17 @@ import club.services.IUserService;
 import club.model.User;
 
 public class Linea_jugador {
-			
+		
+	private int idjugador;
+	
+	public int getIdjugador() {
+		return idjugador;
+	}
+
+	public void setIdjugador(int idjugador) {
+		this.idjugador = idjugador;
+	}
+
 	private String username;
 	
 	private String numsocio;
@@ -34,8 +44,14 @@ public class Linea_jugador {
 
 	public void setFromBD(Jugador jugador) {
 			System.out.println("** setfromBD");
+		this.idjugador = jugador.getIdjugador();
 		this.username = jugador.getUser().getUsername();
-		this.numsocio = Integer.toString(jugador.getNumsocio());
+		if (jugador.getNumsocio()==0) {
+			this.numsocio = "-";
+		}
+		else {
+			this.numsocio = Integer.toString(jugador.getNumsocio());
+		}
 		this.nombre = jugador.getNombre();
 		
 		User user1 = jugador.getUser();
@@ -85,7 +101,7 @@ public class Linea_jugador {
 
 	@Override
 	public String toString() {
-		return "Linea_usuario [username=" + username + ", numsocio=" + numsocio + ", nombre="
+		return "Linea_jugador [idjugador="+idjugador+",username=" + username + ", numsocio=" + numsocio + ", nombre="
 				+ nombre + ", tipo=" + tipo + "]";
 	}
 	

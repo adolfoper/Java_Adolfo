@@ -14,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -84,21 +86,45 @@ public class JugadorController {
 		return"alta_jugador";
 	}
 	
+	@GetMapping("/updatejugador")
+ 	public String updatejugador(@RequestParam("idjugador") int idjugador, Model modelo) {
+		
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("=>> JugadorController /updatejugador");
+
+		Form_jugador form_jugador = new Form_jugador();
+		Jugador jugador = jugadorService.getJugador(idjugador);
+		
+		form_jugador.setFromBD(jugador);
+		modelo.addAttribute("** form_jugador", form_jugador);
+		System.out.println("** Tipo:"+form_jugador.getTipo());
+		System.out.println("** Idjugador:"+form_jugador.getIdjugador());
+		
+		modelo.addAttribute("form_jugador", form_jugador);
+		
+        System.out.println("--> alta_jugador");
+		return"modif_jugador";
+	}
+	
 	@PostMapping("/procesar_alta_jugador")
 	public String procesar_alta_jugador(HttpServletRequest request, 
 										@Valid @ModelAttribute("form_jugador") Form_jugador form_jugador, 
-										BindingResult bindingResult) { 
-		
+										BindingResult bindingResult) { 	
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> JugadorController /procesar_alta_jugador");
 		
 		if (bindingResult.hasErrors()) { 
 			System.out.println("Con errores");
 			return "alta_jugador"; 
 		} 
+		
+		if (form_jugador.valida()==false) { 
+			return "alta_jugador"; 
+		}
 
 		System.out.println("Sin errores");
-		
-		boolean existe = true;
 		
 		//try {
 		//	User userGet = userService.getUser(form_jugador.getUsername());
@@ -107,26 +133,79 @@ public class JugadorController {
 	    //   existe = false;
 	    //}
 		
-		if (existe) {
+		User userGet = userService.getUser(form_jugador.getUsername());
+		
+		if (userGet != null) {
 			form_jugador.setMensaje("Código de usuario existente");
 			return "alta_jugador";
 		}
 		
-		//User user = form_jugador.getToBD_User(true,true);
-		//Authorities authority = form_jugador.getToBD_Authorities(user);
-	    //Jugador jugador = form_jugador.getToBD_Jugador(user);
-	    
-		//userService.save(user);
-		//System.out.println("** Grabado user");
+		User user = form_jugador.getToBD_User(true,true);
+		userService.save(user);
+		System.out.println("** Grabado user");
 		
-		//authoritiesService.save(authority);
-		//System.out.println("** Grabado authorities");
+		userGet = userService.getUser(form_jugador.getUsername());
+		Authorities authority = form_jugador.getToBD_Authorities(userGet);
+		authoritiesService.save(authority);
+		System.out.println("** Grabado authorities");
 		
-		//authoritiesService.save(authority);
-		//System.out.println("** Grabado jugador");
+	    Jugador jugador = form_jugador.getToBD_Jugador(user);		
+		jugadorService.save(jugador);
+		System.out.println("** Grabado jugador");
 			
 	     System.out.println("--> index2");
-	     return "redirect:/index2";
+	     return "redirect:/jugador/index_jugadores";
+	}
+	
+
+	@PostMapping("/procesar_modif_jugador")
+	public String procesar_modif_jugador(HttpServletRequest request, 
+										@Valid @ModelAttribute("form_jugador") Form_jugador form_jugador, 
+										BindingResult bindingResult) { 	
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("=>> JugadorController /procesar_modif_jugador");
+		
+		if (bindingResult.hasErrors()) { 
+			System.out.println("Con errores");
+			return "modif_jugador"; 
+		} 
+		
+		if (form_jugador.valida()==false) { 
+			return "modif_jugador"; 
+		}
+
+		System.out.println("Sin errores");
+		
+		User user = userService.getUser(form_jugador.getUsername());
+		System.out.println("** Compuesto user");
+		Jugador jugador = form_jugador.getToBD_Jugador(user);	
+		System.out.println("** Compuesto jugador");
+		
+		Set authorities = user.getAuthorities();
+		Iterator iterator = authorities.iterator();
+		Authorities authority = (Authorities) iterator.next();
+		System.out.println("** Compuesto authority");
+		
+		String tipo_old = authority.getAuthority().substring(5);
+		String tipo_new = "ROLE_"+form_jugador.getTipo();
+		
+		System.out.println("Rol viejo:"+tipo_old);
+		System.out.println("Rol nuevo:"+tipo_new);
+		if (tipo_old != tipo_new) {
+			Authorities authority2 = new Authorities();
+			authority2 = authority;
+			authoritiesService.delete(authority);
+			authority2.setAuthority(tipo_new);
+			authoritiesService.save(authority2);
+			System.out.println("** Grabado authorities");
+		}
+			
+		jugadorService.save(jugador);
+		System.out.println("** Grabado jugador");
+			
+	     System.out.println("--> index2");
+	     return "redirect:/jugador/index_jugadores";
 	}
 	
 	@GetMapping("/cancel")
@@ -136,6 +215,15 @@ public class JugadorController {
 		System.out.println("=>> JugadorController /cancel");
         System.out.println("--> index2");
         return "redirect:/index2";
+	}
+	
+	@GetMapping("/cancel2")
+	public String cancel2 (HttpServletRequest request, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("=>> JugadorController /cancel2");
+        System.out.println("--> index2");
+        return "redirect:/jugador/index_jugadores";
 	}
 
 }
