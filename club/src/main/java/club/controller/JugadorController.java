@@ -29,6 +29,7 @@ import club.services.IUserService;
 import club.model.User;
 
 import club.services.IAuthoritiesService;
+import club.model.Apuntado;
 import club.model.Authorities;
 
 import club.pantalla.Linea_jugador;
@@ -70,6 +71,7 @@ public class JugadorController {
 		System.out.println("** cargada lista lineas:"+lineas);
 		modelo.addAttribute("lineas", lineas);
 		
+		System.out.println("--> jugadores");
 		return"jugadores";
 	}
 	
@@ -103,8 +105,39 @@ public class JugadorController {
 		
 		modelo.addAttribute("form_jugador", form_jugador);
 		
-        System.out.println("--> alta_jugador");
+        System.out.println("--> modif_jugador");
 		return"modif_jugador";
+	}
+	
+	@GetMapping("/deletejugador")
+	public String deletepartida(@RequestParam("idjugador") int idjugador, Model modelo) {
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("=>> JugadorController /deletejugador");
+
+		Jugador jugador = jugadorService.getJugador(idjugador);
+		System.out.println("** Cargado jugador:"+jugador);
+		
+		User user = jugador.getUser();
+		System.out.println("** Cargado user:"+user);
+		
+		Set authorities = user.getAuthorities();
+		
+		Iterator iterator = authorities.iterator();
+		Authorities authority = (Authorities) iterator.next();
+		System.out.println("** Cargado authority:"+authority);
+
+		authoritiesService.delete(authority);	
+		System.out.println("** Borrado authority");
+		
+		jugadorService.delete(jugador);
+		System.out.println("** Borrado jugador");
+		
+		userService.delete(user);
+		System.out.println("** Borrado user");
+		
+	     System.out.println("--> /jugador/index_jugadores");
+	     return "redirect:/jugador/index_jugadores";
 	}
 	
 	@PostMapping("/procesar_alta_jugador")
@@ -153,7 +186,7 @@ public class JugadorController {
 		jugadorService.save(jugador);
 		System.out.println("** Grabado jugador");
 			
-	     System.out.println("--> index2");
+	     System.out.println("--> /jugador/index_jugadores");
 	     return "redirect:/jugador/index_jugadores";
 	}
 	
@@ -177,18 +210,24 @@ public class JugadorController {
 
 		System.out.println("Sin errores");
 		
+		System.out.println("** Username:"+form_jugador.getUsername());
 		User user = userService.getUser(form_jugador.getUsername());
-		System.out.println("** Compuesto user");
+		System.out.println("** Compuesto user:"+user);
+		
+		Set authorities = user.getAuthorities();
+		System.out.println("1");
+		System.out.println("** Authorities:"+authorities);
+		Iterator iterator = authorities.iterator();
+		System.out.println("2");
+		Authorities authority = (Authorities) iterator.next();
+		System.out.println("3");
+		System.out.println("** Compuesto authority");
+		
 		Jugador jugador = form_jugador.getToBD_Jugador(user);	
 		System.out.println("** Compuesto jugador");
 		
-		Set authorities = user.getAuthorities();
-		Iterator iterator = authorities.iterator();
-		Authorities authority = (Authorities) iterator.next();
-		System.out.println("** Compuesto authority");
-		
 		String tipo_old = authority.getAuthority().substring(5);
-		String tipo_new = "ROLE_"+form_jugador.getTipo();
+		String tipo_new = form_jugador.getTipo();
 		
 		System.out.println("Rol viejo:"+tipo_old);
 		System.out.println("Rol nuevo:"+tipo_new);
@@ -204,7 +243,7 @@ public class JugadorController {
 		jugadorService.save(jugador);
 		System.out.println("** Grabado jugador");
 			
-	     System.out.println("--> index2");
+	     System.out.println("--> /jugador/index_jugadores");
 	     return "redirect:/jugador/index_jugadores";
 	}
 	

@@ -40,29 +40,29 @@
 	
 	<form:hidden path="idpartida" value="0"/>
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Juego:&nbsp; <form:input size="50" path="juego" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Juego:</b>&nbsp; <form:input size="50" path="juego" />*
 		<form:errors path="juego" cssClass="error" />
 	<br /> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Plazas de:&nbsp; <form:input size="1" path="plazasmin" />
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Plazas de:</b>&nbsp; <form:input size="1" path="plazasmin" />
 		<form:errors path="plazasmin" cssClass="error" />
 	&nbsp; a &nbsp;<form:input size="1" path="plazasmax"/>&nbsp;jugadores*  
 		<form:errors path="plazasmax" cssClass="error" />
 	&nbsp;&nbsp;<font color="red">${form_partida.mensaje_plazas}</font>
 	<br/> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Fecha:&nbsp; <form:input size="6" path="fechapartida"/>*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha:</b>&nbsp; <form:input size="6" path="fechapartida"/>*
 		<form:errors path="fechapartida" cssClass="error" />
 	<br/> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Horario previsto de:&nbsp; <form:input size="1" path="horainicio"/>
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Horario previsto de:</b>&nbsp; <form:input size="1" path="horainicio"/>
 		<form:errors path="horainicio" cssClass="error" />
 	&nbsp; a &nbsp;<form:input size="1" path="horafin" />*
 		<form:errors path="horafin" cssClass="error" />
 	&nbsp;&nbsp;<font color="red">${form_partida.mensaje_horas}</font>
 	<br/> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Comentarios:&nbsp; <form:input size="100" path="comentarios"/>
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Comentarios:</b>&nbsp; <form:input size="100" path="comentarios"/>
 		<form:errors path="comentarios" cssClass="error" />
 	<br/> <br />
 

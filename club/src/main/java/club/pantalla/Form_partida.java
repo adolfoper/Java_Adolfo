@@ -96,15 +96,17 @@ public class Form_partida {
 		  	partida.setPlazasmin(Integer.valueOf(this.plazasmin));
 			partida.setPlazasmax(Integer.valueOf(this.plazasmax));
 		
-		String fecha = this.fechapartida.substring(6, 10) +
-						this.fechapartida.substring(2, 6) +
-						this.fechapartida.substring(0, 2);
+		//String fecha = this.fechapartida.substring(6, 10) +
+		//				this.fechapartida.substring(2, 6) +
+		//				this.fechapartida.substring(0, 2);
+		//System.out.println("** fecha:"+fecha);
 		//fecha.replace('/', '-');
 		
 		//partida.setFechapartida(Date.valueOf(fecha));
 		try {
-			java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+			java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(this.fechapartida);
 			partida.setFechapartida (new java.sql.Date(date1.getTime()));
+			//System.out.println("** fechapartida:"+partida.getFechapartida());
 		}
 		catch (ParseException ex) {
             // Excepción ya contemplada en la validación de fecha

@@ -111,7 +111,8 @@ public class PartidaController {
 										BindingResult bindingResult) { 
 //	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
 // 				BindingResult bindingResult) {
-		
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("=>> PartidaController /procesar_alta_partida");
         
 		form_partida.setMensaje_horas("");

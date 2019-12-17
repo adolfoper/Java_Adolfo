@@ -40,23 +40,23 @@
 	
 	<form:hidden path="idjugador" value="0"/>
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Usuario:&nbsp; <form:input size="50" path="username" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Usuario:</b>&nbsp; <form:input size="50" path="username" />*
 		<form:errors path="username" cssClass="error" />
 	<br /> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Nombre:&nbsp; <form:input size="50" path="nombre" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Nombre:</b>&nbsp; <form:input size="50" path="nombre" />*
 		<form:errors path="nombre" cssClass="error" />
 		
 	<br/> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Num. socio:&nbsp; <form:input size="6" path="numsocio" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Num. socio:</b>&nbsp; <form:input size="6" path="numsocio" />*
 		<form:errors path="numsocio" cssClass="error" />
 		
-	&nbsp;&nbsp;&nbsp;&nbsp;Fecha Atla:&nbsp; <form:input size="6" path="fechaalta"/>*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha Alta:</b>&nbsp; <form:input size="6" path="fechaalta"/>*
 	<form:errors path="fechaalta" cssClass="error" />
 	<br /><br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Direccion:&nbsp; <form:input size="50" path="direccion1" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Direccion:</b>&nbsp; <form:input size="50" path="direccion1" />*
 		<form:errors path="direccion1" cssClass="error" />
 	<br /><br />
 	
@@ -65,11 +65,11 @@
 		<form:errors path="direccion2" cssClass="error" />
 	<br /> <br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Teléfono:&nbsp; <form:input size="9" path="telefono" />*
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Teléfono:</b>&nbsp; <form:input size="9" path="telefono" />*
 		<form:errors path="telefono" cssClass="error" />
 	<br /><br />
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;Perfil:&nbsp; <form:radiobuttons path="tipo"
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>Perfil:</b>&nbsp; <form:radiobuttons path="tipo"
 		items="${form_jugador.listaTipos}" delimiter="&nbsp;&nbsp;&nbsp;"/>
 	<br /><br />
 	

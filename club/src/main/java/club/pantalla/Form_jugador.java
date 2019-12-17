@@ -50,6 +50,16 @@ public class Form_jugador {
 	@NotEmpty(message = "Campo obligatorio")
 	@Size(max = 50,message = "La longitud máxima debe ser 50")
 	private String username;
+	
+	private String username_noValidar;
+
+	public String getUsername_noValidar() {
+		return username_noValidar;
+	}
+
+	public void setUsername_noValidar(String username_noValidar) {
+		this.username_noValidar = username_noValidar;
+	}
 
 	private String tipo;
 	
@@ -151,13 +161,15 @@ public class Form_jugador {
         jugador.setTelefono(Integer.valueOf(this.telefono));
         jugador.setNumsocio(Integer.valueOf(this.numsocio));
         
-        String fecha = this.fechaalta.substring(6, 10) +
-				this.fechaalta.substring(2, 6) +
-				this.fechaalta.substring(0, 2);
+        // String fecha = 	this.fechaalta.substring(6, 10) +
+		//				this.fechaalta.substring(2, 6) +
+		//				this.fechaalta.substring(0, 2);
+        //System.out.println("** fecha:"+fecha);
 
         try {
-        	java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+        	java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(this.fechaalta);
         	jugador.setFechaalta (new java.sql.Date(date1.getTime()));
+        	System.out.println("** fechaalta:"+jugador.getFechaalta());
         }
         catch (ParseException ex) {
         	// Excepción ya contemplada en la validación de fecha
@@ -170,6 +182,7 @@ public class Form_jugador {
 		System.out.println("** setFromBD");
 		this.idjugador = jugador.getIdjugador();
 		this.username = jugador.getUser().getUsername();
+		this.username_noValidar = this.username;
 		this.numsocio = Integer.toString(jugador.getNumsocio());
 		this.nombre = jugador.getNombre();
 		this.telefono = Long.toString(jugador.getTelefono());

@@ -52,6 +52,7 @@
 			<tr>
 				<th>Numero</th>
 				<th>Jugador</th>
+				<th>Nombre</th>
 				<th>Comentarios</th>
 				<th></th>
 			</tr>
@@ -59,6 +60,7 @@
 			<c:forEach var="lineas" items="${lineas}">
 				<tr>
 					<td>${lineas.orden}</td>
+					<td>${lineas.username}</td>
 					<td>${lineas.nombre}</td>
 					<td>${lineas.comentarios}</td>
 					<td>
