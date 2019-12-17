@@ -2,7 +2,6 @@ package club.dao;
 
 import java.util.List;
 
-import club.model.Apuntado;
 import club.model.Authorities;
 import club.model.User;
 

@@ -27,6 +27,9 @@ public class LoginController {
 	@Autowired
 	private IPartidaService partidaService;
 	
+	//
+	// Petición de login
+	//
 	@GetMapping("/formlogin")
 	public String formLogin(){ 
 		System.out.println(" ");
@@ -36,44 +39,31 @@ public class LoginController {
 		return"login";
 	}
 	
+	//
+	// Listado de partidas
+	//
 	@GetMapping("/index2")
 	public String index2(HttpServletRequest request, Model modelo) {
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("=>> LoginController /index2");
-		System.out.println(request.getUserPrincipal().getName());
-			
+					
 		String name = request.getUserPrincipal().getName();
 		Jugador perfil = jugadorService.getJugador(name);
-        System.out.println("** Perfil:"+perfil);
+
 		List<Partida> partidas = partidaService.getPartidas();
 		List<Linea_index2> lineas = new ArrayList<Linea_index2>();
 
+		// Carga de las líneas de partida
 		for (Partida partida:partidas) {
 			Linea_index2 linea= new Linea_index2();
 			linea.setFromBD(partida);
 			lineas.add(linea);
 		}
-        System.out.println("** Lineas de partida cargadas");
 		
 		modelo.addAttribute("lineas", lineas);
 		System.out.println("lineas:"+lineas);
-		
-        //if (request.isUserInRole("ROLE_ADMINISTRADOR")) {
-        //   System.out.println("Administrador");
-        //    return "redirect:/administrador/";
-        //}
-        //if (request.isUserInRole("ROLE_SOCIO")) {
-        //    System.out.println("Socio");
-        //    return "redirect:/socio/";
-        //}
-        //
-		//if (request.isUserInRole("ROLE_COLABORADOR")) {
-        //    System.out.println("Colaborador");
-        //    return "redirect:/colaborador/";
-        //}
-		
-        //return "redirect:/";
+
         System.out.println("--> index2");
 		return"index2";
 	}

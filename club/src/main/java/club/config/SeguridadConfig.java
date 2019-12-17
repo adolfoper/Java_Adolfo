@@ -33,12 +33,10 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-//				.antMatchers("/").hasRole("TODOS")
 				.antMatchers("/socio/**").hasRole("SOCIO")
 				.antMatchers("/simpatizante/**").hasRole("SIMPATIZANTE")
 				.antMatchers("/administrador/**").hasRole("ADMINISTRADOR")
 				.and().formLogin().loginPage("/formlogin")
-//				.loginProcessingUrl("/authenticateTheUser").permitAll().and().logout().permitAll().and()
 				.loginProcessingUrl("/authenticateTheUser").permitAll().defaultSuccessUrl("/index2", true)
 				.and().exceptionHandling().accessDeniedPage("/prohibido");
 	}

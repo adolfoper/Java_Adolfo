@@ -2,14 +2,8 @@ package club.pantalla;
 
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
-import java.util.List;
 
 import club.model.Partida;
-import club.services.IPartidaService;
-import club.model.Apuntado;
-import club.services.IApuntadoService;
-import club.model.Jugador;
-import club.services.IJugadorService;
 
 public class Linea_index2 {
 			
@@ -31,10 +25,10 @@ public class Linea_index2 {
 	
 	private int numApuntados;
 	
+	//
 	// Recibir valores en formato BD
+	//
 	public void setFromBD(Partida partida) {
-		
-        System.out.println("** SetfromBD");
         
 		this.idpartida = partida.getIdpartida();	
 		this.creador = partida.getJugador().getNombre();	
@@ -43,12 +37,16 @@ public class Linea_index2 {
 		this.plazas = Integer.toString(partida.getPlazasmin())+ "-" + 		
 					  Integer.toString(partida.getPlazasmax());
 
+		// Conversión de fecha
 		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
 		this.fechapartida = fecha.format(partida.getFechapartida());
 
+		// Conversión de hora
 		DateFormat hora = new SimpleDateFormat("HH:mm");
 		this.horainicio = hora.format(partida.getHorainicio());		
 		this.horafin = hora.format(partida.getHorafin());
+		
+		// Carga el número de apuntados a la partida
 		this.numApuntados = partida.getApuntados().size();
 	}
 

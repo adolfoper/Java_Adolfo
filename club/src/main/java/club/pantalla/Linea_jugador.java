@@ -1,25 +1,10 @@
 package club.pantalla;
 
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.util.HashSet;
-import java.util.List;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
 
-import javax.persistence.Column;
-
-import club.model.Partida;
-import club.services.IPartidaService;
-
 import club.model.Jugador;
-import club.services.IJugadorService;
-
-import club.services.IAuthoritiesService;
 import club.model.Authorities;
-
-import club.services.IUserService;
 import club.model.User;
 
 public class Linea_jugador {
@@ -42,10 +27,12 @@ public class Linea_jugador {
 	
 	private String tipo;
 
+	// Carga la linea de pantalla a partir de la vista de base de datos
 	public void setFromBD(Jugador jugador) {
-			System.out.println("** setfromBD");
 		this.idjugador = jugador.getIdjugador();
 		this.username = jugador.getUser().getUsername();
+		
+		// Mostrar raya si no tiene número de socio
 		if (jugador.getNumsocio()==0) {
 			this.numsocio = "-";
 		}
@@ -54,17 +41,14 @@ public class Linea_jugador {
 		}
 		this.nombre = jugador.getNombre();
 		
-		User user1 = jugador.getUser();
-		//System.out.println("user:"+user1);
-			
+		User user1 = jugador.getUser();		
 		Set authorities = user1.getAuthorities();
-		System.out.println("authorities:"+authorities);
-			
+		
+		// Cargar el tipo de usuario
 		authorities = jugador.getUser().getAuthorities();
 		Iterator iterator = authorities.iterator();
 		Authorities authority = (Authorities) iterator.next();
 		this.tipo = authority.getAuthority().substring(5);	
-		System.out.println("** salir");
 	}
 	
 	public String getTipo() {

@@ -1,6 +1,5 @@
 package club.pantalla;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,27 +54,29 @@ public class Form_partida {
 		super();
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.println("** Creando form_partida");
-		System.out.println(date.format(formatter));
 		this.fechapartida = date.format(formatter);
 		this.horainicio="00:00";
 		this.horafin="00:00";
 	}
-	
+
+	//
+	// Validaciones adicionales de los datos de pantalla
+	//
 	public boolean validar() {
 			
 		boolean valido = true;
 		
 		this.mensaje_horas = "";
 		this.mensaje_plazas = "";
-		
-        System.out.println("** Validando intervalo de horas");
+
+		// Relacion entre horas desde y hasta
         Time time = Time.valueOf(this.horainicio+":00");
         if (time.compareTo(Time.valueOf(this.horafin+":00"))>=0){
         	this.mensaje_horas = "Intervalo de horas no válido. ";
 			valido = false;
         }
 		
+     // Relacion entre plazas mínimas y máximas
         if (Integer.valueOf(this.plazasmin) > Integer.valueOf(this.plazasmax)) {
         	this.mensaje_plazas = "Intervalo de plazas no válido. ";
 			valido = false;
@@ -84,43 +85,38 @@ public class Form_partida {
         return valido;
 	}
 	
-	// Convertir valores a formato BD
+	//
+	// Convertir valores de pantalla a formato BD
+	//
 	public Partida getToBD(Jugador jugador) {
 		
 		Partida partida = new Partida();
-        System.out.println("** getToBD");
-          	partida.setIdpartida(this.idpartida);
-        	partida.setJugador(jugador);
-			partida.setJuego(this.juego);
-		  	partida.setComentarios(this.comentarios);
-		  	partida.setPlazasmin(Integer.valueOf(this.plazasmin));
-			partida.setPlazasmax(Integer.valueOf(this.plazasmax));
+        partida.setIdpartida(this.idpartida);
+        partida.setJugador(jugador);
+		partida.setJuego(this.juego);
+		partida.setComentarios(this.comentarios);
+		partida.setPlazasmin(Integer.valueOf(this.plazasmin));
+		partida.setPlazasmax(Integer.valueOf(this.plazasmax));
 		
-		//String fecha = this.fechapartida.substring(6, 10) +
-		//				this.fechapartida.substring(2, 6) +
-		//				this.fechapartida.substring(0, 2);
-		//System.out.println("** fecha:"+fecha);
-		//fecha.replace('/', '-');
-		
-		//partida.setFechapartida(Date.valueOf(fecha));
+		// conversión de fecha
 		try {
 			java.util.Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(this.fechapartida);
 			partida.setFechapartida (new java.sql.Date(date1.getTime()));
-			//System.out.println("** fechapartida:"+partida.getFechapartida());
 		}
 		catch (ParseException ex) {
             // Excepción ya contemplada en la validación de fecha
         }
 		
+		// conversión de hora
 		partida.setHorainicio(Time.valueOf(this.horainicio+":00"));
 		partida.setHorafin(Time.valueOf(this.horafin+":00"));
 		return partida;
 	}
 	
+	//
 	// Obtener valores de BD
+	//
 	public void setFromBD(Partida partida) {
-		
-        System.out.println("** setFromBD");
 		
 		this.idpartida = partida.getIdpartida();	
 		this.creador = partida.getJugador().getNombre();	
@@ -128,12 +124,16 @@ public class Form_partida {
 		this.comentarios = partida.getComentarios();		
 		this.plazasmin = Integer.toString(partida.getPlazasmin()); 		
 		this.plazasmax = Integer.toString(partida.getPlazasmax());
+		
+		// Conversión de fecha
 		DateFormat fecha = new SimpleDateFormat("dd/MM/YYYY");
 		this.fechapartida = fecha.format(partida.getFechapartida());
 
+		// Conversión de hora
 		DateFormat hora = new SimpleDateFormat("HH:mm");
 		this.horainicio = hora.format(partida.getHorainicio());		
 		this.horafin = hora.format(partida.getHorafin());
+		
 		this.mensaje_horas = "";
 		this.mensaje_plazas = "";
 	}

@@ -21,10 +21,6 @@ public class Authorities {
   @ManyToOne
   @JoinColumn(name = "username")
   private User user;
-
-  //@Id
-  //@Column(name = "idauthorities2")
-  //private String idauthorities2;
   
   public String getAuthority() {
     return authority;

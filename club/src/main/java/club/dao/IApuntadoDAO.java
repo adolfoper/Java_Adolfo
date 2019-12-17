@@ -9,8 +9,6 @@ public interface IApuntadoDAO {
 	Apuntado getApuntado(int idjugador);
 	
 	List<Apuntado> getApuntados();
-	
-	//List<Apuntado> getApuntados(int idpartida);
 
 	void save(Apuntado apuntado);
 

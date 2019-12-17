@@ -21,11 +21,6 @@ import club.model.Jugador;
 
 @Entity
 @Table(name = "apuntados")
-//@AssociationOverrides({
-//	@AssociationOverride(name = "pk.jugador", 
-//		joinColumns = @JoinColumn(name = "idjugador")),
-//	@AssociationOverride(name = "pk.partida", 
-//		joinColumns = @JoinColumn(name = "idpartida")) })
 public class Apuntado {
 
 	@Id
@@ -43,35 +38,6 @@ public class Apuntado {
 	@JoinColumn(name="idjugador")
 	private Jugador jugador;
 	
-	//private ApuntadoId pk = new ApuntadoId();
-	
-	//@EmbeddedId
-	//public ApuntadoId getPk() {
-	//	return pk;
-	//}
-
-	//public void setPk(ApuntadoId pk) {
-	//	this.pk = pk;
-	//}
-	
-	//@Transient
-	//public Partida getPartida() {
-	//	return getPk().getPartida();
-	//}
-
-	//public void setPartida(Partida partida) {
-	//	getPk().setPartida(partida);
-	//}
-
-	//@Transient
-	//public Jugador getJugador() {
-	//	return getPk().getJugador();
-	//}
-
-	//public void setJugador(Jugador jugador) {
-	//	getPk().setJugador(jugador);
-	//}
-	
 	@Column(name = "comentarios")
 	private String comentarios;
 	
@@ -81,8 +47,6 @@ public class Apuntado {
 
 	public Apuntado(Partida partida, Jugador jugador, String comentarios) {
 		super();
-		//this.partida = partida;
-		//this.jugador = jugador;
 		setPartida(partida);
 		setJugador(jugador);
 		this.comentarios = comentarios;

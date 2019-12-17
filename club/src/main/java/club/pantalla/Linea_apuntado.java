@@ -17,6 +17,9 @@ public class Linea_apuntado {
 
 	private boolean esUsuario;
 
+	//
+	// Conversión de datos de BD a linea de apuntados en pantalla
+	//
 	public void setFromBD(Apuntado apuntado, Jugador perfil, int numero) {
 		this.idapuntado = apuntado.getIdapuntado();
 		this.orden = Integer.toString(numero);
@@ -30,6 +33,9 @@ public class Linea_apuntado {
 			this.esUsuario = false;
 	}
 	
+	//
+	// Inicializar línea
+	//
 	public void setVacio(Jugador perfil, int numero) {
 		this.idapuntado = 0;
 		this.orden = Integer.toString(numero);

@@ -24,6 +24,7 @@ public class Form_apuntados {
 		this.comentarios = "";
 	}
 	
+	// Pasa los datos del form de pantalla a la vista de base de datos
 	public Apuntado setToBD(Jugador jugador, Partida partida) {
 		Apuntado apuntado = new Apuntado();
 		apuntado.setIdapuntado(this.idapuntado); 

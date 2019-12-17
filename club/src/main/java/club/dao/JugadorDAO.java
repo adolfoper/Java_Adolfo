@@ -43,12 +43,7 @@ public class JugadorDAO implements IJugadorDAO {
 		    List<Jugador> results2 = typesafeAdd(results, new ArrayList<Jugador>(), Jugador.class);
 			jugador = results2.get(0);
 		}
-		
-		//Jugador jugador = new Jugador();
-		//jugador = q.getSingleResult();
-		
-		//		Jugador jugador = miSesion.createQuery("from Jugadores where username = username", Jugador.class).getSingleResult();
-		
+			
 		return jugador;
 	}
 	

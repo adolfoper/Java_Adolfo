@@ -2,7 +2,6 @@ package club.services;
 
 import java.util.List;
 
-import club.model.Partida;
 import club.model.User;
 
 public interface IUserService {

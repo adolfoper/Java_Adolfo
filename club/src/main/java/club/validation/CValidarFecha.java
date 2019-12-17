@@ -1,7 +1,5 @@
 package club.validation;
 
-//import java.util.regex.Matcher;
-//import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Date;

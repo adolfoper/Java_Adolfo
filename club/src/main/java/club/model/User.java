@@ -8,9 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,10 +26,6 @@ public class User {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
   private Set<Authorities> authorities = new HashSet<>();
-  
-  //@OneToOne(fetch = FetchType.LAZY)
-  //@JoinColumn(name = "username")
-  //private Jugador jugador;
 
   public String getUsername() {
     return username;
@@ -64,12 +58,5 @@ public class User {
   public void setAuthorities(Set<Authorities> authorities) {
     this.authorities = authorities;
   }
-
-//public Jugador getJugador() {
-//	return this.jugador;
-//}
-
-//public void setJugador(Jugador user) {
-//	this.jugador = jugador;
-//}
+  
 }

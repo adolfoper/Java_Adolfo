@@ -11,14 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.JoinTable;
 
 import club.model.Partida;
 
 import java.sql.Date;
-//import java.util.ArrayList;
 import java.util.HashSet;
-//import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,28 +46,22 @@ public class Jugador {
 	@Column(name = "numsocio")
 	private int numsocio;
 	
-	//@Type(type = "date")
 	@Column(name = "fechaalta")
 	private Date fechaalta;
 	
 	// Relacion como creador de partidas
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	//private List<Partida> partidas;
+	
 	private Set<Partida> partidas = new HashSet<Partida>(0);
 	
 	public void addPartida(Partida partida) {
 		if (partidas==null) {
-			//partidas=new ArrayList<Partida>();
 			partidas=new HashSet<Partida>(0);
 		}
 		partidas.add(partida);
 		partida.setJugador(this);
 	}
-	
-	//public List<Partida> getPartidas() {
-	//	return partidas;
-	//}
 	
 	public Set<Partida> getPartidas() {
 		return partidas;
@@ -79,7 +70,7 @@ public class Jugador {
 	// Relacion con apuntado
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="jugador",
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	//private List<Apuntado> apuntados;
+	
 	private Set<Apuntado> apuntados = new HashSet<>();
 		
 	public void addApuntado(Apuntado apuntado) {
@@ -97,7 +88,6 @@ public class Jugador {
 	public Jugador() {
 
 	}
-
 
 	public Jugador(String nombre, String direccion1, String direccion2, 
 				   long telefono, int numsocio, Date fechaalta) {

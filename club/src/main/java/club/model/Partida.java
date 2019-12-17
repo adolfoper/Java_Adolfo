@@ -47,24 +47,18 @@ public class Partida {
 	@Column(name = "plazasmax")
 	private int plazasmax;
 	
-	//@Type(type = "date")
 	@Column(name = "fechapartida")
 	private Date fechapartida;
 	
-	//@Type(type = "time")
 	@Column(name = "horainicio")
 	private Time horainicio;
 	
-	//@Type(type = "time")
 	@Column(name = "horafin")
 	private Time horafin;
-	
-	// private Set<Apuntado> apuntados = new HashSet<Apuntado>(0);
 
 	public Partida() {
 
 	}
-
 
 	public Partida(String juego, String comentarios, int plazasmin, int plazasmax,
 				   Date fechapartida, Time horainicio, Time horafin) {
@@ -84,23 +78,11 @@ public class Partida {
 	
 	public void addApuntado(Apuntado apuntado) {
 		if (apuntados==null) {
-	//		apuntados=new HashSet<Apuntado>();
 			apuntados=new ArrayList<Apuntado>();
 		}
 		apuntados.add(apuntado);
 		apuntado.setPartida(this);
 	}
-	
-	//private Set<Apuntado> apuntados = new HashSet<>();
-	
-	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.partida", cascade=CascadeType.ALL)
-	//public Set<Apuntado> getApuntado() {
-	//	return this.apuntados;
-	//}
-	
-	//public Set<Apuntado> getApuntados() {
-	//	return apuntados;
-	//}
 	
 	@Override
 	public String toString() {

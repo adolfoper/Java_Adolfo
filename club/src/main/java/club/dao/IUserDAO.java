@@ -2,9 +2,7 @@ package club.dao;
 
 import java.util.List;
 
-import club.model.Authorities;
 import club.model.User;
-import club.model.Jugador;
 
 public interface IUserDAO {
 	

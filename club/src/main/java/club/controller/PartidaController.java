@@ -9,15 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-//import java.util.ArrayList;
-//import java.util.List;
 
 import club.model.Jugador;
 import club.services.IJugadorService;
@@ -44,8 +40,10 @@ public class PartidaController {
 	@Autowired
 	private IApuntadoService apuntadoService;
 	
+	//
+	// Carga la pantalla de alta de partida
+	//
 	@GetMapping("/addpartida")
-//	public String addpartida(HttpServletRequest request, Model modelo) {
  	public String addpartida(Model modelo) {
 		System.out.println(" ");
 		System.out.println(" ");
@@ -58,6 +56,9 @@ public class PartidaController {
 		return"alta_partida";
 	}
 	
+	//
+	// Carga la pantalla de modificación de partida
+	//
 	@GetMapping("/updatepartida")
 	public String updatepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
 		System.out.println(" ");
@@ -68,12 +69,14 @@ public class PartidaController {
 		Form_partida form_partida = new Form_partida();
 		form_partida.setFromBD(partida);
 		modelo.addAttribute("form_partida", form_partida);
-        System.out.println("** ID:"+form_partida.getIdpartida());
-		
+        
         System.out.println("--> modif_partida");
 		return"modif_partida";
 	}
 	
+	//
+	// Delete de partida
+	//
 	@GetMapping("/deletepartida")
 	public String deletepartida(@RequestParam("idpartida") int idpartida, Model modelo) {
 		System.out.println(" ");
@@ -84,17 +87,22 @@ public class PartidaController {
 		
 		int idjugador=partida.getJugador().getIdjugador();
 		
+		// Delete de los apuntados a la partida
 		List<Apuntado> apuntados = partida.getApuntados();
 		for (Apuntado apuntado:apuntados) {
 			apuntadoService.delete(apuntado);
 		}
 		
+		// Delete de los apuntados a la partida
 		partidaService.delete(partida);
 		
         System.out.println("--> index2");
         return "redirect:/index2";
 	}
-		
+	
+	//
+	// Vuelta a la pantalla de listado de partidas
+	//
 	@GetMapping("/cancel")
 	public String cancel (HttpServletRequest request, Model modelo) {
 		System.out.println(" ");
@@ -104,13 +112,13 @@ public class PartidaController {
         return "redirect:/index2";
 	}
 	
-	//public String procesar_alta_partida(HttpServletRequest request, Model modelo) {
+	//
+	// Trata el retorno de la pantalla de alta de partida
+	//
 	@PostMapping("/procesar_alta_partida")
 	public String procesar_alta_partida(HttpServletRequest request, 
 										@Valid @ModelAttribute("form_partida") Form_partida form_partida, 
 										BindingResult bindingResult) { 
-//	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
-// 				BindingResult bindingResult) {
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("=>> PartidaController /procesar_alta_partida");
@@ -118,44 +126,42 @@ public class PartidaController {
 		form_partida.setMensaje_horas("");
 		form_partida.setMensaje_plazas("");
 		
+		// Control de errores
 		if (bindingResult.hasErrors()) { 
-			System.out.println("Con errores");
 			return "alta_partida"; 
 		} 
 		else {
 			if (!form_partida.validar()) {
-				System.out.println("Error de horas");
 				return "alta_partida"; 
 			}
-			System.out.println("Sin errores");
 			
+			// Recupera el usuario activo y la partida
 			String name = request.getUserPrincipal().getName();
 			Jugador perfil = jugadorService.getJugador(name);
-	        System.out.println("** Perfil:"+perfil);
 	        
-	        Partida partida = form_partida.getToBD(perfil);
-	        System.out.println("** Partida convertida:"+partida);
-			partidaService.save(partida);	
-	        System.out.println("** Partida grabada");
+			// Modifica partida
+	        Partida partida = form_partida.getToBD(perfil);	       
+	        partidaService.save(partida);	
 	        
+	        // Apunta al usuario activo a la partida
 	        Apuntado apuntado = new Apuntado();
 	        apuntado.setComentarios("Creador de la partida");
 			apuntado.setPartida(partida);
 			apuntado.setJugador(perfil);
 			apuntadoService.save(apuntado);
 			
-			 System.out.println("** Apuntado");
 	        System.out.println("--> index2");
 	        return "redirect:/index2";
 		}
 	}
 	
+	//
+	// Trata el retorno de la pantalla de modificación de partida
+	//
 	@PostMapping("/procesar_modif_partida")
 	public String procesar_modif_partida(HttpServletRequest request, 
 										@Valid @ModelAttribute("form_partida") Form_partida form_partida, 
 										BindingResult bindingResult) { 
-//	public String procesar_alta_partida(@Valid @ModelAttribute("form_partida") Form_partida form_partida,
-// 				BindingResult bindingResult) {
 		
 		System.out.println(" ");
 		System.out.println(" ");
@@ -164,27 +170,23 @@ public class PartidaController {
 		form_partida.setMensaje_horas("");
 		form_partida.setMensaje_plazas("");
 		
+		// Control de errores
 		if (bindingResult.hasErrors()) { 
-			System.out.println("Con errores");
 			return "modif_partida"; 
 		} 
 		else {
 			if (!form_partida.validar()) {
-				System.out.println("Error de horas");
 				return "modif_partida"; 
 			}
-			System.out.println("Sin errores");
 			
+			// Recupera usuario activo
 			String name = request.getUserPrincipal().getName();
 			Jugador perfil = jugadorService.getJugador(name);
-	        System.out.println("** Perfil:"+perfil);
-	        System.out.println("** ID:"+form_partida.getIdpartida());
-	        
+	    	   
+			// Modifica la partida
 	        Partida partida = form_partida.getToBD(perfil);
-	        System.out.println("** ID:"+partida.getIdpartida());
-	        System.out.println("** Partida convertida:"+partida);
-			partidaService.save(partida);	
-	        System.out.println("** Partida grabada");
+	        partidaService.save(partida);	
+	        
 	        System.out.println("--> index2");
 	        return "redirect:/index2";
 		}
